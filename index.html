@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Political Tendency Quiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            width: 95%;
+            padding: 1.5rem;
+            margin: 1rem auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            line-height: 1.4;
+            padding: 0 0.5rem;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            padding: 0 0.5rem;
+        }
+
+        .answer-btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: normal;
+            text-align: center;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .answer-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+        }
+
+        .loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        #results h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #radarChart {
+            max-width: 100%;
+            max-height: 500px;
+            width: 100%;
+            height: 100%;
+            margin: 1rem auto;
+            padding: 0.5rem;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 1rem 0.5rem;
+        }
+
+        .start-screen h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .start-screen p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .start-btn, .restart-btn {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 1.5rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .start-btn:hover, .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 2rem;
+                margin: 2rem auto;
+            }
+
+            .question {
+                font-size: 1.5rem;
+                padding: 0;
+            }
+
+            .answers {
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .answer-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .start-btn, .restart-btn {
+                padding: 1rem 3rem;
+                font-size: 1.2rem;
+                width: auto;
+            }
+
+            .start-screen h1 {
+                font-size: 2.2rem;
+            }
+
+            .start-screen p {
+                font-size: 1.2rem;
+            }
+
+            #results h2 {
+                font-size: 2rem;
+            }
+
+            #radarChart {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container visible" id="mainContainer">
+        <div class="start-screen" id="startScreen">
+            <h1>Political Tendency Quiz</h1>
+            <p>Discover your political leanings through this thoughtful quiz.</p>
+            <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <div id="quizContent" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question" id="questionText"></div>
+            <div class="answers" id="answersContainer"></div>
+        </div>
+
+        <div class="loading" id="loadingScreen">
+            <div class="spinner"></div>
+            <p>Calculating your results...</p>
+        </div>
+
+        <div id="results">
+            <h2>Your Political Tendency Profile</h2>
+            <canvas id="radarChart"></canvas>
+            <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script>
+        let questions = null;
+        let currentStep = 1;
+        let scores = {
+            Authority: 0, Liberty: 0,
+            Security: 0, Openness: 0,
+            Traditionalism: 0, Progressivism: 0,
+            Nationalism: 0, Globalism: 0,
+            Collectivism: 0, Individualism: 0,
+            Equality: 0, Meritocracy: 0
+        };
+
+        async function loadQuestions() {
+            const response = await fetch('questions.json');
+            questions = await response.json();
+        }
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const container = document.getElementById('mainContainer');
+            container.classList.remove('visible');
+            
+            setTimeout(() => {
+                const stepQuestions = questions[currentStep].questions;
+                const randomQuestion = stepQuestions[Math.floor(Math.random() * stepQuestions.length)];
+                
+                document.getElementById('questionText').textContent = randomQuestion.question;
+                
+                const answersContainer = document.getElementById('answersContainer');
+                answersContainer.innerHTML = '';
+                
+                ['Yes', 'No', 'Neutral'].forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer;
+                    button.onclick = () => handleAnswer(randomQuestion.answers[answer]);
+                    answersContainer.appendChild(button);
+                });
+
+                document.getElementById('progressFill').style.width = `${((currentStep - 1) / 8) * 100}%`;
+                
+                container.classList.add('visible');
+            }, 500);
+        }
+
+        function handleAnswer(answerScores) {
+            Object.entries(answerScores).forEach(([attribute, score]) => {
+                scores[attribute] += score;
+            });
+
+            if (currentStep < 8) {
+                currentStep++;
+                showQuestion();
+            } else {
+                showLoadingScreen();
+            }
+        }
+
+        function showLoadingScreen() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('loadingScreen').style.display = 'block';
+
+            setTimeout(showResults, 1500);
+        }
+
+        function normalizeScores() {
+            // Find min and max for each pair of opposing values
+            const pairs = {
+                'Authority-Liberty': ['Authority', 'Liberty'],
+                'Security-Openness': ['Security', 'Openness'],
+                'Traditionalism-Progressivism': ['Traditionalism', 'Progressivism'],
+                'Nationalism-Globalism': ['Nationalism', 'Globalism'],
+                'Collectivism-Individualism': ['Collectivism', 'Individualism'],
+                'Equality-Meritocracy': ['Equality', 'Meritocracy']
+            };
+
+            const normalized = {};
+            
+            // Normalize each pair
+            Object.values(pairs).forEach(([attr1, attr2]) => {
+                const total = Math.abs(scores[attr1]) + Math.abs(scores[attr2]);
+                if (total === 0) {
+                    // If both scores are 0, set them to 50 (neutral)
+                    normalized[attr1] = 50;
+                    normalized[attr2] = 50;
+                } else {
+                    // Convert to percentage but maintain the relationship
+                    normalized[attr1] = (scores[attr1] / total * 100 + 100) / 2;
+                    normalized[attr2] = (scores[attr2] / total * 100 + 100) / 2;
+                }
+            });
+            
+            return normalized;
+        }
+
+        function showResults() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+
+            const normalizedScores = normalizeScores();
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            // Create a mapping of original keys to display labels and define the order
+            const dimensionOrder = [
+                'Globalism',       
+                'Progressivism',        
+                'Nationalism',        
+                'Individualism',   
+                'Meritocracy',     
+                'Traditionalism',  
+                'Authority',       
+                'Security',        
+                'Liberty',         
+                'Collectivism',     
+                'Equality',        
+                'Openness'    
+            ];
+
+            const dimensionLabels = {
+                'Authority'      : 'Order‑Driven',
+                'Liberty'        : 'Freedom‑Oriented',
+                'Security'       : 'Safety‑Minded',
+                'Openness'       : 'Open‑Minded',
+                'Traditionalism' : 'Tradition‑Focused',
+                'Progressivism'  : 'Forward‑Looking',
+                'Nationalism'    : 'Nation‑Centric',
+                'Globalism'      : 'World‑Centric',
+                'Collectivism'   : 'Community‑Oriented',
+                'Individualism'  : 'Self‑Reliant',
+                'Equality'       : 'Fairness‑Focused',
+                'Meritocracy'    : 'Achievement‑Driven'
+              };
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: dimensionOrder.map(key => dimensionLabels[key]),
+                    datasets: [{
+                        label: 'Your Political Profile',
+                        data: dimensionOrder.map(key => normalizedScores[key]),
+                        fill: true,
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(52, 152, 219, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    layout: {
+                        padding: {
+                            top: 40,
+                            right: 40,
+                            bottom: 40,
+                            left: 40
+                        }
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: {
+                                font: {
+                                    size: 12
+                                },
+                                stepSize: 20,
+                                showLabelBackdrop: true,
+                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                backdropPadding: 2
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 13,
+                                    weight: 'bold'
+                                },
+                                padding: 30,
+                                centerPointLabels: true
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Score: ${Math.round(context.raw)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function restartQuiz() {
+            // Reset all variables
+            currentStep = 1;
+            scores = {
+                Authority: 0, Liberty: 0,
+                Security: 0, Openness: 0,
+                Traditionalism: 0, Progressivism: 0,
+                Nationalism: 0, Globalism: 0,
+                Collectivism: 0, Individualism: 0,
+                Equality: 0, Meritocracy: 0
+            };
+            
+            // Hide results and show start screen
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('loadingScreen').style.display = 'none';
+            
+            // Reset progress bar
+            document.getElementById('progressFill').style.width = '0%';
+            
+            // Ensure container is visible
+            document.getElementById('mainContainer').classList.add('visible');
+        }
+
+        // Initialize the quiz
+        loadQuestions().then(() => {
+            document.getElementById('mainContainer').classList.add('visible');
+        });
+    </script>
+</body>
+</html> 
