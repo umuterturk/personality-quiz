@@ -889,10 +889,9 @@
             const baseUrl = window.location.origin + window.location.pathname;
             const encodedResults = encodeScores(scores);
             const shareUrl = `${baseUrl}?r=${encodedResults}`;
-            const text = 'My Political Profile: ';
             
             try {
-                await navigator.clipboard.writeText(text + shareUrl);
+                await navigator.clipboard.writeText(shareUrl);
                 
                 // Visual feedback
                 button.classList.add('success');
