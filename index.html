@@ -254,11 +254,13 @@
 
         .twitter {
             background-color: #000000;
+            position: relative;
         }
 
-        .twitter i {
-            color: white;
-            font-size: 1.2rem; /* Slightly smaller for X icon */
+        .twitter svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
         }
 
         .tiktok {
@@ -368,6 +370,11 @@
             .answers {
                 padding: 0;
             }
+
+            .twitter svg {
+                width: 20px;
+                height: 20px;
+            }
         }
 
         @media (max-width: 360px) {
@@ -437,7 +444,9 @@
                     <span class="tooltip">Share on WhatsApp</span>
                 </a>
                 <a href="#" class="share-btn twitter" onclick="shareResults('twitter')" title="Share on X">
-                    <i class="fa-brands fa-x"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                        <path d="M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z"></path>
+                    </svg>
                     <span class="tooltip">Share on X</span>
                 </a>
                 <a href="#" class="share-btn tiktok" onclick="shareResults('tiktok')" title="Share on TikTok">
@@ -466,6 +475,9 @@
 
         // Function to encode scores to compact string
         function encodeScores(scores) {
+            // Version 1 prefix: v1_
+            const VERSION = "1";
+            
             // Order of values in the encoded string
             const order = [
                 'Authority', 'Liberty',
@@ -476,18 +488,33 @@
                 'Equality', 'Meritocracy'
             ];
             
-            // Convert scores to 0-99 range and join with commas
-            return order.map(key => {
-                // Round to nearest integer and ensure 0-99 range
-                const value = Math.max(0, Math.min(99, Math.round(scores[key])));
-                // Convert to two digits, pad with zero if needed
-                return value.toString().padStart(2, '0');
-            }).join('');
+            // Convert all scores to a single large number
+            let totalNumber = 0;
+            for (let i = 0; i < order.length; i++) {
+                // Convert 0-100 to 0-99 range and shift left
+                const value = Math.max(0, Math.min(99, Math.round(scores[order[i]])));
+                totalNumber = totalNumber * 100 + value;
+            }
+            
+            // Convert to base36 (0-9 and a-z)
+            const encoded = totalNumber.toString(36);
+            
+            // Add version prefix
+            return VERSION + encoded;
         }
 
         // Function to decode scores from compact string
         function decodeScores(encoded) {
             try {
+                // Extract version and encoded value
+                const version = encoded.charAt(0);
+                const encodedValue = encoded.slice(1);
+                
+                if (version !== "1") {
+                    console.error("Unsupported version");
+                    return null;
+                }
+
                 const order = [
                     'Authority', 'Liberty',
                     'Security', 'Openness',
@@ -497,14 +524,19 @@
                     'Equality', 'Meritocracy'
                 ];
 
+                // Convert from base36 back to decimal
+                let totalNumber = parseInt(encodedValue, 36);
+                
+                // Extract individual scores
                 const scores = {};
-                // Each score is 2 digits
-                for (let i = 0; i < order.length; i++) {
-                    const value = parseInt(encoded.substr(i * 2, 2), 10);
-                    scores[order[i]] = value;
+                for (let i = order.length - 1; i >= 0; i--) {
+                    scores[order[i]] = totalNumber % 100;
+                    totalNumber = Math.floor(totalNumber / 100);
                 }
+                
                 return scores;
             } catch (e) {
+                console.error("Error decoding scores:", e);
                 return null;
             }
         }
