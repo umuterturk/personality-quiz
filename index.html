@@ -853,34 +853,31 @@
             const baseUrl = window.location.origin + window.location.pathname;
             const encodedResults = encodeScores(scores);
             const shareUrl = `${baseUrl}?r=${encodedResults}`;
-            const text = 'Check out my Political Tendency Profile! See my results at: ';
+            const text = 'My Political Profile:';
             
             switch (platform) {
                 case 'whatsapp':
-                    const imageData = await generateResultImage();
                     if (navigator.share) {
                         try {
                             await navigator.share({
-                                title: 'My Political Tendency Profile',
+                                title: 'Political Profile',
                                 text: text,
-                                url: shareUrl,
-                                files: [dataURLtoFile(imageData, 'political-profile.png')]
+                                url: shareUrl
                             });
                         } catch (err) {
-                            window.open(`https://wa.me/?text=${encodeURIComponent(text + shareUrl)}`, '_blank');
+                            window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`, '_blank');
                         }
                     } else {
-                        window.open(`https://wa.me/?text=${encodeURIComponent(text + shareUrl)}`, '_blank');
+                        window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + shareUrl)}`, '_blank');
                     }
                     break;
                 case 'twitter':
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
                     break;
                 case 'tiktok':
-                    // Since TikTok doesn't have a direct share URL, copy to clipboard
                     try {
-                        await navigator.clipboard.writeText(text + shareUrl);
-                        alert('Link copied to clipboard! You can now paste it on TikTok.');
+                        await navigator.clipboard.writeText(text + ' ' + shareUrl);
+                        alert('Link copied! You can now paste it on TikTok');
                     } catch (err) {
                         window.open('https://www.tiktok.com', '_blank');
                     }
@@ -888,26 +885,14 @@
             }
         }
 
-        // Helper function to convert Data URL to File object
-        function dataURLtoFile(dataurl, filename) {
-            let arr = dataurl.split(','),
-                mime = arr[0].match(/:(.*?);/)[1],
-                bstr = atob(arr[1]),
-                n = bstr.length,
-                u8arr = new Uint8Array(n);
-            while(n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new File([u8arr], filename, {type: mime});
-        }
-
         async function copyShareUrl(button) {
             const baseUrl = window.location.origin + window.location.pathname;
             const encodedResults = encodeScores(scores);
             const shareUrl = `${baseUrl}?r=${encodedResults}`;
+            const text = 'My Political Profile: ';
             
             try {
-                await navigator.clipboard.writeText(shareUrl);
+                await navigator.clipboard.writeText(text + shareUrl);
                 
                 // Visual feedback
                 button.classList.add('success');
