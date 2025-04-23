@@ -194,6 +194,7 @@
             cursor: pointer;
             transition: opacity 0.2s, transform 0.2s;
             text-decoration: none;
+            position: relative;
         }
 
         .share-btn:hover {
@@ -203,6 +204,44 @@
 
         .share-btn i {
             font-size: 1.4rem;
+        }
+
+        .copy-url {
+            background-color: #6c5ce7;
+        }
+
+        .copy-url.success {
+            background-color: #00b894;
+            transform: scale(1.1);
+        }
+
+        .copy-url.success i {
+            animation: checkmark 0.5s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            bottom: -30px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .share-btn:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
         }
 
         .download {
@@ -345,6 +384,17 @@
                 gap: 0.6rem;
             }
         }
+
+        .loading-text {
+            margin-top: 15px;
+        }
+        
+        .loading-text small {
+            display: block;
+            margin-top: 8px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -365,7 +415,7 @@
 
         <div class="loading" id="loadingScreen">
             <div class="spinner"></div>
-            <p>Calculating your results...</p>
+            <p id="loadingText" class="loading-text">Calculating your results...</p>
         </div>
 
         <div id="results">
@@ -376,15 +426,23 @@
             <div class="share-buttons">
                 <a href="#" class="share-btn download" onclick="downloadResults()" title="Download Results">
                     <i class="fas fa-download"></i>
+                    <span class="tooltip">Download Image</span>
+                </a>
+                <a href="#" class="share-btn copy-url" onclick="copyShareUrl(this)" title="Copy URL">
+                    <i class="fas fa-link"></i>
+                    <span class="tooltip">Copy Link</span>
                 </a>
                 <a href="#" class="share-btn whatsapp" onclick="shareResults('whatsapp')" title="Share on WhatsApp">
                     <i class="fab fa-whatsapp"></i>
+                    <span class="tooltip">Share on WhatsApp</span>
                 </a>
                 <a href="#" class="share-btn twitter" onclick="shareResults('twitter')" title="Share on X">
                     <i class="fa-brands fa-x"></i>
+                    <span class="tooltip">Share on X</span>
                 </a>
                 <a href="#" class="share-btn tiktok" onclick="shareResults('tiktok')" title="Share on TikTok">
                     <i class="fab fa-tiktok"></i>
+                    <span class="tooltip">Share on TikTok</span>
                 </a>
             </div>
         </div>
@@ -396,6 +454,7 @@
     <script>
         let questions = null;
         let currentStep = 1;
+        let isSharedResult = false;
         let scores = {
             Authority: 0, Liberty: 0,
             Security: 0, Openness: 0,
@@ -405,9 +464,77 @@
             Equality: 0, Meritocracy: 0
         };
 
+        // Function to encode scores to compact string
+        function encodeScores(scores) {
+            // Order of values in the encoded string
+            const order = [
+                'Authority', 'Liberty',
+                'Security', 'Openness',
+                'Traditionalism', 'Progressivism',
+                'Nationalism', 'Globalism',
+                'Collectivism', 'Individualism',
+                'Equality', 'Meritocracy'
+            ];
+            
+            // Convert scores to 0-99 range and join with commas
+            return order.map(key => {
+                // Round to nearest integer and ensure 0-99 range
+                const value = Math.max(0, Math.min(99, Math.round(scores[key])));
+                // Convert to two digits, pad with zero if needed
+                return value.toString().padStart(2, '0');
+            }).join('');
+        }
+
+        // Function to decode scores from compact string
+        function decodeScores(encoded) {
+            try {
+                const order = [
+                    'Authority', 'Liberty',
+                    'Security', 'Openness',
+                    'Traditionalism', 'Progressivism',
+                    'Nationalism', 'Globalism',
+                    'Collectivism', 'Individualism',
+                    'Equality', 'Meritocracy'
+                ];
+
+                const scores = {};
+                // Each score is 2 digits
+                for (let i = 0; i < order.length; i++) {
+                    const value = parseInt(encoded.substr(i * 2, 2), 10);
+                    scores[order[i]] = value;
+                }
+                return scores;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
         async function loadQuestions() {
             const response = await fetch('questions.json');
             questions = await response.json();
+
+            // Check for shared results in URL
+            const sharedResults = getUrlParameter('r');
+            if (sharedResults) {
+                const decodedScores = decodeScores(sharedResults);
+                if (decodedScores) {
+                    isSharedResult = true;
+                    scores = decodedScores;
+                    document.getElementById('startScreen').style.display = 'none';
+                    showLoadingScreen();
+                    return;
+                }
+            }
+
+            document.getElementById('mainContainer').classList.add('visible');
         }
 
         function startQuiz() {
@@ -459,6 +586,14 @@
         function showLoadingScreen() {
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('loadingScreen').style.display = 'block';
+            
+            // Update loading text based on context
+            const loadingText = document.getElementById('loadingText');
+            if (isSharedResult) {
+                loadingText.innerHTML = 'Loading shared profile...<br><small>Someone shared their political tendency profile with you!</small>';
+            } else {
+                loadingText.textContent = 'Calculating your results...';
+            }
 
             setTimeout(showResults, 1500);
         }
@@ -683,8 +818,10 @@
         }
 
         async function shareResults(platform) {
-            const shareUrl = 'https://umuterturk.github.io/personality-quiz/';
-            const text = 'Check out my Political Tendency Profile! Take the quiz yourself at: ';
+            const baseUrl = window.location.origin + window.location.pathname;
+            const encodedResults = encodeScores(scores);
+            const shareUrl = `${baseUrl}?r=${encodedResults}`;
+            const text = 'Check out my Political Tendency Profile! See my results at: ';
             
             switch (platform) {
                 case 'whatsapp':
@@ -708,8 +845,13 @@
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
                     break;
                 case 'tiktok':
-                    // TikTok doesn't have a direct share URL, but we can open TikTok app
-                    window.open('https://www.tiktok.com', '_blank');
+                    // Since TikTok doesn't have a direct share URL, copy to clipboard
+                    try {
+                        await navigator.clipboard.writeText(text + shareUrl);
+                        alert('Link copied to clipboard! You can now paste it on TikTok.');
+                    } catch (err) {
+                        window.open('https://www.tiktok.com', '_blank');
+                    }
                     break;
             }
         }
@@ -725,6 +867,32 @@
                 u8arr[n] = bstr.charCodeAt(n);
             }
             return new File([u8arr], filename, {type: mime});
+        }
+
+        async function copyShareUrl(button) {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const encodedResults = encodeScores(scores);
+            const shareUrl = `${baseUrl}?r=${encodedResults}`;
+            
+            try {
+                await navigator.clipboard.writeText(shareUrl);
+                
+                // Visual feedback
+                button.classList.add('success');
+                const icon = button.querySelector('i');
+                icon.classList.remove('fa-link');
+                icon.classList.add('fa-check');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('success');
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-link');
+                }, 2000);
+                
+            } catch (err) {
+                alert('Failed to copy URL. Please try again.');
+            }
         }
 
         // Initialize the quiz
