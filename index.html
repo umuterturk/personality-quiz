@@ -415,7 +415,8 @@
                     scales: {
                         r: {
                             angleLines: {
-                                display: true
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.1)'
                             },
                             suggestedMin: 0,
                             suggestedMax: 100,
@@ -425,16 +426,19 @@
                                 },
                                 stepSize: 20,
                                 showLabelBackdrop: true,
-                                backdropColor: 'rgba(255, 255, 255, 0.75)',
-                                backdropPadding: 2
+                                backdropColor: 'rgba(255, 255, 255, 0.75)'
                             },
                             pointLabels: {
                                 font: {
-                                    size: 13,
-                                    weight: 'bold'
+                                    size: 12
                                 },
-                                padding: 30,
-                                centerPointLabels: true
+                                centerPointLabels: false,
+                                padding: 25,
+                                display: true,
+                                callback: function(value, index) {
+                                    return value.split('‑');
+                                },
+                                textAlign: 'center'
                             }
                         }
                     },
