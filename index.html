@@ -402,6 +402,30 @@
             opacity: 0.8;
             font-size: 0.9em;
         }
+
+        .back-btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            width: auto;
+            align-self: center;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .back-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -418,6 +442,7 @@
             </div>
             <div class="question" id="questionText"></div>
             <div class="answers" id="answersContainer"></div>
+            <button id="backButton" class="back-btn" onclick="goBack()" style="display: none;">Back</button>
         </div>
 
         <div class="loading" id="loadingScreen">
@@ -464,6 +489,7 @@
         let questions = null;
         let currentStep = 1;
         let isSharedResult = false;
+        let questionHistory = []; // Track previous questions and answers
         let scores = {
             Authority: 0, Liberty: 0,
             Security: 0, Openness: 0,
@@ -592,17 +618,34 @@
                     const button = document.createElement('button');
                     button.className = 'answer-btn';
                     button.textContent = answer;
-                    button.onclick = () => handleAnswer(randomQuestion.answers[answer]);
+                    button.onclick = () => handleAnswer(randomQuestion, answer);
                     answersContainer.appendChild(button);
                 });
 
                 document.getElementById('progressFill').style.width = `${((currentStep - 1) / 9) * 100}%`;
                 
+                // Show back button if not on first question
+                const backButton = document.getElementById('backButton');
+                if (questionHistory.length > 0) {
+                    backButton.style.display = 'block';
+                } else {
+                    backButton.style.display = 'none';
+                }
+                
                 container.classList.add('visible');
             }, 500);
         }
 
-        function handleAnswer(answerScores) {
+        function handleAnswer(question, answerText) {
+            const answerScores = question.answers[answerText];
+            
+            // Save current question and answer to history
+            questionHistory.push({
+                step: currentStep,
+                question: question,
+                answer: answerText
+            });
+            
             Object.entries(answerScores).forEach(([attribute, score]) => {
                 scores[attribute] += score;
             });
@@ -665,6 +708,14 @@
             document.getElementById('results').style.display = 'block';
 
             const normalizedScores = normalizeScores();
+            
+            // Update URL with encoded results
+            if (!isSharedResult) {
+                const encodedResults = encodeScores(scores);
+                const newUrl = window.location.pathname + '?r=' + encodedResults;
+                window.history.pushState({ scores: scores }, 'Quiz Results', newUrl);
+            }
+            
             const ctx = document.getElementById('radarChart').getContext('2d');
             
             // Create a mapping of original keys to display labels and define the order
@@ -787,6 +838,7 @@
         function restartQuiz() {
             // Reset all variables
             currentStep = 1;
+            questionHistory = []; // Clear question history
             scores = {
                 Authority: 0, Liberty: 0,
                 Security: 0, Openness: 0,
@@ -795,6 +847,9 @@
                 Collectivism: 0, Individualism: 0,
                 Equality: 0, Meritocracy: 0
             };
+            
+            // Clear answer buttons to prevent pre-selected answers on retake
+            document.getElementById('answersContainer').innerHTML = '';
             
             // Hide results and show start screen
             document.getElementById('results').style.display = 'none';
@@ -909,6 +964,25 @@
             } catch (err) {
                 alert('Failed to copy URL. Please try again.');
             }
+        }
+
+        function goBack() {
+            if (questionHistory.length === 0) return;
+            
+            // Get the last answered question
+            const lastAnswer = questionHistory.pop();
+            
+            // Revert the score changes
+            const answerScores = lastAnswer.question.answers[lastAnswer.answer];
+            Object.entries(answerScores).forEach(([attribute, score]) => {
+                scores[attribute] -= score;
+            });
+            
+            // Go back to previous step
+            currentStep = lastAnswer.step;
+            
+            // Show question again
+            showQuestion();
         }
 
         // Initialize the quiz
