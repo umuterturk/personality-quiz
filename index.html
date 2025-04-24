@@ -426,6 +426,152 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
+        .similar-figures {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .similar-figures h3 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .figure-matches {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .figure-matches {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        .figure-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .figure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        @media (min-width: 768px) {
+            .figure-card {
+                flex: 0 0 calc(50% - 0.75rem);
+                max-width: calc(50% - 0.75rem);
+            }
+        }
+        
+        .figure-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: top center;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .figure-content {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .figure-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: var(--primary-color);
+        }
+        
+        .figure-country {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.7rem;
+        }
+        
+        .figure-traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.7rem;
+        }
+        
+        .figure-trait {
+            font-size: 0.8rem;
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--secondary-color);
+        }
+        
+        .figure-description {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #555;
+        }
+
+        .wiki-button {
+            margin-top: auto;
+            padding: 0.6rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            color: var(--primary-color);
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .wiki-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .wiki-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .similarity-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -703,6 +849,8 @@
             return normalized;
         }
 
+        let chartInstance = null; // Keep track of chart instance
+
         function showResults() {
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('results').style.display = 'block';
@@ -717,6 +865,11 @@
             }
             
             const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
             
             // Create a mapping of original keys to display labels and define the order
             const dimensionOrder = [
@@ -740,7 +893,7 @@
                 'Security'       : 'Safety‑Minded',
                 'Openness'       : 'Open‑Minded',
                 'Traditionalism' : 'Tradition‑Focused',
-                'Progressivism'  : 'Forward‑Looking',
+                'Progressivism'  : 'Progressivist',
                 'Nationalism'    : 'Nation‑Centric',
                 'Globalism'      : 'World‑Centric',
                 'Collectivism'   : 'Community‑Oriented',
@@ -749,7 +902,7 @@
                 'Meritocracy'    : 'Achievement‑Driven'
               };
 
-            new Chart(ctx, {
+            chartInstance = new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: dimensionOrder.map(key => dimensionLabels[key]),
@@ -833,9 +986,467 @@
                     }
                 }
             });
+            
+            // Find and display similar public figures
+            findSimilarFigures(normalizedScores);
+        }
+
+        // Modify the publicFigures array to remove image and wiki URLs
+        
+        const publicFigures = [
+        {
+            name: "Mao Zedong",
+            country: "China",
+            traits: [0.3, 0.4, 0.7, 0.1, 0.2, 0.1, 1.0, 0.8, 0.0, 1.0, 0.6, 0.1],
+            description: "Led Communist China, emphasizing collectivization and state authority."
+        },
+        {
+            name: "Margaret Thatcher",
+            country: "U.K.",
+            traits: [0.5, 0.2, 0.6, 0.9, 0.8, 0.7, 0.6, 0.6, 0.7, 0.1, 0.3, 0.4],
+            description: "Conservative British PM known for free-market policies and individualism."
+        },
+        {
+            name: "Nelson Mandela",
+            country: "S. Africa",
+            traits: [0.6, 0.9, 0.4, 0.5, 0.5, 0.2, 0.4, 0.4, 0.9, 0.4, 1.0, 0.8],
+            description: "Anti-apartheid revolutionary who championed equality and reconciliation."
+        },
+        {
+            name: "Mahatma Gandhi",
+            country: "India",
+            traits: [0.5, 0.7, 0.8, 0.6, 0.4, 0.6, 0.3, 0.3, 0.9, 0.3, 0.8, 0.7],
+            description: "Led India to independence through non-violent civil disobedience."
+        },
+        {
+            name: "Mustafa Kemal Atatürk",
+            country: "Turkey",
+            traits: [0.5, 0.9, 1.0, 0.5, 0.6, 0.2, 0.8, 0.7, 0.5, 0.3, 0.6, 0.6],
+            description: "Founder of modern Turkey, combined nationalism with westernization."
+        },
+        {
+            name: "Che Guevara",
+            country: "Argentina/Cuba",
+            traits: [0.9, 0.8, 0.4, 0.2, 0.3, 0.1, 0.8, 0.7, 0.2, 1.0, 0.7, 0.5],
+            description: "Revolutionary who advocated for global socialism and collective values."
+        },
+        {
+            name: "Ayn Rand",
+            country: "USA",
+            traits: [0.3, 0.2, 0.2, 1.0, 1.0, 0.2, 0.1, 0.3, 1.0, 0.0, 0.2, 0.6],
+            description: "Philosopher who developed Objectivism, emphasizing individualism and free markets."
+        },
+        {
+            name: "Jacinda Ardern",
+            country: "N. Zealand",
+            traits: [0.8, 1.0, 0.3, 0.4, 0.5, 0.2, 0.4, 0.6, 0.7, 0.4, 0.9, 0.9],
+            description: "Progressive PM known for inclusive policies and compassionate leadership."
+        },
+        {
+            name: "Ruhollah Khomeini",
+            country: "Iran",
+            traits: [0.2, 0.1, 0.6, 0.1, 0.3, 1.0, 1.0, 0.9, 0.0, 0.6, 0.3, 0.1],
+            description: "Islamic revolutionary who established Iran's theocratic system."
+        },
+        {
+            name: "Angela Merkel",
+            country: "Germany",
+            traits: [0.9, 0.6, 0.4, 0.4, 0.7, 0.4, 0.5, 0.6, 0.7, 0.2, 0.6, 0.9],
+            description: "Long-serving German Chancellor known for promoting European unity and evidence-based pragmatic leadership."
+        },
+        {
+            name: "Lee Kuan Yew",
+            country: "Singapore",
+            traits: [0.8, 0.5, 0.7, 0.3, 1.0, 0.5, 0.9, 0.9, 0.3, 0.4, 0.4, 0.4],
+            description: "Singapore's founding father who created a meritocratic society with strong governance."
+        },
+        {
+            name: "Martin Luther King Jr.",
+            country: "USA",
+            traits: [0.5, 0.9, 0.2, 0.6, 0.4, 0.3, 0.3, 0.2, 0.9, 0.5, 1.0, 0.9],
+            description: "Civil rights leader who advocated for racial equality through non-violent resistance."
+        },
+        {
+            name: "Joseph Stalin",
+            country: "USSR",
+            traits: [0.4, 0.3, 0.7, 0.0, 0.2, 0.2, 1.0, 1.0, 0.0, 1.0, 0.4, 0.0],
+            description: "Soviet leader who enforced collectivization and maintained power through repression, purges, and a vast security apparatus."
+        },
+        {
+            name: "Vladimir Putin",
+            country: "Russia",
+            traits: [0.3, 0.2, 0.9, 0.3, 0.4, 0.8, 1.0, 0.9, 0.2, 0.3, 0.3, 0.2],
+            description: "Long-time Russian president blending strong-man authority with assertive nationalism and tight control of media and dissent."
+        },
+        {
+            name: "Donald Trump",
+            country: "USA",
+            traits: [0.1, 0.2, 0.9, 0.8, 0.6, 0.7, 0.7, 0.8, 0.5, 0.1, 0.3, 0.3],
+            description: "Controversial U.S. president whose 'America First' stance and populist rhetoric polarized domestic and global audiences."
+        },
+        {
+            name: "Greta Thunberg",
+            country: "Sweden",
+            traits: [0.9, 1.0, 0.1, 0.5, 0.3, 0.1, 0.2, 0.6, 0.8, 0.6, 0.8, 0.9],
+            description: "Youth climate activist whose blunt, moral appeals for urgent action made her a lightning-rod in the global climate debate."
+        },
+        {
+            name: "Malala Yousafzai",
+            country: "Pakistan",
+            traits: [0.8, 0.9, 0.2, 0.6, 0.5, 0.2, 0.2, 0.4, 0.9, 0.5, 1.0, 0.9],
+            description: "Education activist who survived a Taliban attack and became a Nobel laureate championing girls' rights worldwide."
+        },
+        {
+            name: "Pope Francis",
+            country: "Vatican/Argentina",
+            traits: [0.9, 0.6, 0.1, 0.3, 0.3, 0.8, 0.8, 0.5, 0.4, 0.6, 0.8, 0.7],
+            description: "Catholic pontiff mixing doctrinal tradition with outspoken advocacy for migrants, the poor, and interfaith dialogue."
+        },
+        {
+            name: "Xi Jinping",
+            country: "China",
+            traits: [0.7, 0.3, 0.9, 0.1, 0.5, 0.6, 1.0, 1.0, 0.0, 1.0, 0.4, 0.2],
+            description: "China's paramount leader who tightens Communist Party control, champions state-led development, and prioritizes national security."
+        },
+        {
+            name: "Elon Musk",
+            country: "USA/S. Africa",
+            traits: [0.8, 0.6, 0.2, 1.0, 0.9, 0.1, 0.6, 0.4, 0.8, 0.1, 0.3, 0.6],
+            description: "Polarizing tech magnate celebrated for radical innovation and a libertarian streak that challenges regulation and convention."
+        },
+        {
+            name: "Winston Churchill",
+            country: "U.K.",
+            traits: [0.6, 0.2, 0.8, 0.5, 0.5, 0.8, 0.8, 0.9, 0.7, 0.2, 0.3, 0.4],
+            description: "British statesman who led the UK to victory during WWII, championing democracy and freedom against totalitarianism."
+        },
+        {
+            name: "Eleanor Roosevelt",
+            country: "USA",
+            traits: [0.9, 0.9, 0.2, 0.6, 0.5, 0.3, 0.3, 0.5, 0.8, 0.4, 1.0, 0.9],
+            description: "Transformative First Lady who championed human rights globally, civil rights domestically, and reshaped the role of women in politics."
+        },
+        {
+            name: "Simón Bolívar",
+            country: "South America",
+            traits: [0.5, 0.6, 1.0, 0.6, 0.4, 0.3, 0.8, 0.7, 0.8, 0.3, 0.5, 0.5],
+            description: "\"The Liberator\" who led independence movements against Spanish rule across South America, creating multiple new nations."
+        }
+        ];
+
+        // Separate image URL map
+        const figureImageUrls = {
+            "Mao Zedong": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Mao_Zedong_in_1957_%28cropped%29.jpg",
+            "Margaret Thatcher": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Margaret_Thatcher_stock_portrait_%28cropped%29.jpg/500px-Margaret_Thatcher_stock_portrait_%28cropped%29.jpg",
+            "Nelson Mandela": "https://upload.wikimedia.org/wikipedia/commons/0/02/Nelson_Mandela_1994.jpg",
+            "Mahatma Gandhi": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Mahatma-Gandhi%2C_studio%2C_1931.jpg",
+            "Mustafa Kemal Atatürk": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Ataturk1930s.jpg",
+            "Che Guevara": "https://upload.wikimedia.org/wikipedia/commons/5/58/CheHigh.jpg",
+            "Ayn Rand": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Ayn_Rand_%281943_Talbot_portrait%29.jpg/500px-Ayn_Rand_%281943_Talbot_portrait%29.jpg",
+            "Jacinda Ardern": "https://upload.wikimedia.org/wikipedia/commons/b/b6/New_Zealand_Prime_Minister_Jacinda_Ardern_in_2018.jpg",
+            "Ruhollah Khomeini": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Portrait_of_Ruhollah_Khomeini.jpg/500px-Portrait_of_Ruhollah_Khomeini.jpg",
+            "Angela Merkel": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Angela_Merkel_2019_cropped.jpg/500px-Angela_Merkel_2019_cropped.jpg",
+            "Lee Kuan Yew": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Prime_Minister_Lee_Kuan_Yew_of_Singapore_Making_a_Toast_at_a_State_Dinner_Held_in_His_Honor%2C_1975.jpg/500px-Prime_Minister_Lee_Kuan_Yew_of_Singapore_Making_a_Toast_at_a_State_Dinner_Held_in_His_Honor%2C_1975.jpg",
+            "Martin Luther King Jr.": "https://upload.wikimedia.org/wikipedia/commons/0/05/Martin_Luther_King%2C_Jr..jpg",
+            "Joseph Stalin": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Joseph_Stalin_in_1932_%284%29_%28cropped%29%282%29.jpg/500px-Joseph_Stalin_in_1932_%284%29_%28cropped%29%282%29.jpg",
+            "Vladimir Putin": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%9F%D1%83%D1%82%D0%B8%D0%BD_%2808-03-2024%29_%28cropped%29_%28higher_res%29.jpg/500px-%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%9F%D1%83%D1%82%D0%B8%D0%BD_%2808-03-2024%29_%28cropped%29_%28higher_res%29.jpg",
+            "Donald Trump": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/TrumpPortrait.jpg/500px-TrumpPortrait.jpg",
+            "Greta Thunberg": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Greta_Thunberg_Stockholm_2024_%283x4_cropped%29.jpg/500px-Greta_Thunberg_Stockholm_2024_%283x4_cropped%29.jpg",
+            "Malala Yousafzai": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Malala_Yousafzai_2023_portrait_2x3.jpg/500px-Malala_Yousafzai_2023_portrait_2x3.jpg",
+            "Pope Francis": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Pope_Francis_Korea_Haemi_Castle_19.jpg/500px-Pope_Francis_Korea_Haemi_Castle_19.jpg",
+            "Xi Jinping": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Xi_Jinping_%28November_2024%29_02.jpg/500px-Xi_Jinping_%28November_2024%29_02.jpg",
+            "Elon Musk": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/USAFA_Hosts_Elon_Musk_%28Image_1_of_17%29_%28cropped%29.jpg/500px-USAFA_Hosts_Elon_Musk_%28Image_1_of_17%29_%28cropped%29.jpg",
+            "Winston Churchill": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sir_Winston_Churchill_-_19086236948.jpg/500px-Sir_Winston_Churchill_-_19086236948.jpg",
+            "Eleanor Roosevelt": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Eleanor_Roosevelt_portrait_1933.jpg/500px-Eleanor_Roosevelt_portrait_1933.jpg",
+            "Simón Bolívar": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Sim%C3%B3n_Bol%C3%ADvar._Toro_Moreno%2C_Jos%C3%A9._1922%2C_Legislative_Palace%2C_La_Paz.png/500px-Sim%C3%B3n_Bol%C3%ADvar._Toro_Moreno%2C_Jos%C3%A9._1922%2C_Legislative_Palace%2C_La_Paz.png"
+        };
+
+        // Separate wiki URL map
+        const figureWikiUrls = {
+            "Mao Zedong": "https://en.wikipedia.org/wiki/Mao_Zedong",
+            "Margaret Thatcher": "https://en.wikipedia.org/wiki/Margaret_Thatcher",
+            "Nelson Mandela": "https://en.wikipedia.org/wiki/Nelson_Mandela",
+            "Mahatma Gandhi": "https://en.wikipedia.org/wiki/Mahatma_Gandhi",
+            "Mustafa Kemal Atatürk": "https://en.wikipedia.org/wiki/Mustafa_Kemal_Atatürk",
+            "Che Guevara": "https://en.wikipedia.org/wiki/Che_Guevara",
+            "Ayn Rand": "https://en.wikipedia.org/wiki/Ayn_Rand",
+            "Jacinda Ardern": "https://en.wikipedia.org/wiki/Jacinda_Ardern",
+            "Ruhollah Khomeini": "https://en.wikipedia.org/wiki/Ruhollah_Khomeini",
+            "Angela Merkel": "https://en.wikipedia.org/wiki/Angela_Merkel",
+            "Lee Kuan Yew": "https://en.wikipedia.org/wiki/Lee_Kuan_Yew",
+            "Martin Luther King Jr.": "https://en.wikipedia.org/wiki/Martin_Luther_King_Jr.",
+            "Joseph Stalin": "https://en.wikipedia.org/wiki/Joseph_Stalin",
+            "Vladimir Putin": "https://en.wikipedia.org/wiki/Vladimir_Putin",
+            "Donald Trump": "https://en.wikipedia.org/wiki/Donald_Trump",
+            "Greta Thunberg": "https://en.wikipedia.org/wiki/Greta_Thunberg",
+            "Malala Yousafzai": "https://en.wikipedia.org/wiki/Malala_Yousafzai",
+            "Pope Francis": "https://en.wikipedia.org/wiki/Pope_Francis",
+            "Xi Jinping": "https://en.wikipedia.org/wiki/Xi_Jinping",
+            "Elon Musk": "https://en.wikipedia.org/wiki/Elon_Musk",
+            "Winston Churchill": "https://en.wikipedia.org/wiki/Winston_Churchill",
+            "Eleanor Roosevelt": "https://en.wikipedia.org/wiki/Eleanor_Roosevelt",
+            "Simón Bolívar": "https://en.wikipedia.org/wiki/Sim%C3%B3n_Bol%C3%ADvar"
+        };
+
+        // Find similar public figures based on user's scores
+        function findSimilarFigures(normalizedScores) {
+            // All possible traits (dimensions)
+            const allTraits = [
+                'Globalism', 'Progressivism', 'Nationalism', 'Individualism',
+                'Meritocracy', 'Traditionalism', 'Authority', 'Security',
+                'Liberty', 'Collectivism', 'Equality', 'Openness'
+            ];
+            
+            const userVector = allTraits.map(trait => normalizedScores[trait] || 50); // Default to 50 if missing
+            // Calculate similarity scores for each figure using cosine similarity
+            const similarities = publicFigures.map(figure => {
+                // Create figure vector from figure's traits array which now contains numeric values
+                // Each figure.traits is an array of 12 numeric values corresponding to the traits in allTraits
+                const figureVector = figure.traits;
+                
+                // Calculate cosine similarity
+                const cosineSimilarity = calculateCosineSimilarity(userVector, figureVector);
+                
+                return {
+                    figure: figure,
+                    score: cosineSimilarity
+                };
+            });
+            
+            // Sort by similarity score (highest first)
+            similarities.sort((a, b) => b.score - a.score);
+            
+            // Take top 2 matches
+            const topMatches = similarities.slice(0, 2);
+            
+            // Display the matches
+            displaySimilarFigures(topMatches);
+        }
+        
+        // Calculate cosine similarity between two vectors
+        function calculateCosineSimilarity(vectorA, vectorB) {
+            if (vectorA.length !== vectorB.length) {
+                throw new Error('Vectors must have the same length');
+            }
+            
+            // Calculate dot product
+            let dotProduct = 0;
+            let normA = 0;
+            let normB = 0;
+            
+            for (let i = 0; i < vectorA.length; i++) {
+                dotProduct += vectorA[i] * vectorB[i];
+                normA += vectorA[i] * vectorA[i];
+                normB += vectorB[i] * vectorB[i];
+            }
+            
+            // Handle zero vectors to avoid division by zero
+            if (normA === 0 || normB === 0) {
+                return 0;
+            }
+            
+            // Return cosine similarity
+            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        }
+        
+        // Display the similar figures in the results
+        function displaySimilarFigures(matches) {
+            // Create container if it doesn't exist
+            let figuresContainer = document.getElementById('similarFigures');
+            if (!figuresContainer) {
+                figuresContainer = document.createElement('div');
+                figuresContainer.id = 'similarFigures';
+                figuresContainer.className = 'similar-figures';
+                
+                // Add heading
+                const heading = document.createElement('h3');
+                heading.textContent = 'Your Political Tendencies Resemble:';
+                figuresContainer.appendChild(heading);
+                
+                // Insert after radar chart but before buttons
+                const resultsDiv = document.getElementById('results');
+                const restartButton = document.querySelector('.restart-btn');
+                resultsDiv.insertBefore(figuresContainer, restartButton);
+            } else {
+                // Clear existing content
+                figuresContainer.innerHTML = '';
+                const heading = document.createElement('h3');
+                heading.textContent = 'Your Political Tendencies Resemble:';
+                figuresContainer.appendChild(heading);
+            }
+            
+            // Create container for figure cards
+            const matchesContainer = document.createElement('div');
+            matchesContainer.className = 'figure-matches';
+            figuresContainer.appendChild(matchesContainer);
+            
+            // Add each match
+            matches.forEach((match, index) => {
+                const figure = match.figure;
+                
+                // Create card container
+                const card = document.createElement('div');
+                card.className = 'figure-card';
+                
+                // Add similarity badge
+                const similarityBadge = document.createElement('div');
+                similarityBadge.className = 'similarity-badge';
+                // Convert similarity score to percentage (0 to 100)
+                const similarityPercent = Math.round(match.score * 100);
+                similarityBadge.textContent = `${similarityPercent}% match`;
+                card.appendChild(similarityBadge);
+                
+                // Add image
+                const img = document.createElement('img');
+                img.src = figureImageUrls[figure.name] || 'https://via.placeholder.com/400x250?text=Image+Not+Available';
+                img.alt = figure.name;
+                img.className = 'figure-image';
+                img.onerror = function() {
+                    //this.src = 'https://via.placeholder.com/400x250?text=Image+Not+Available';
+                };
+                card.appendChild(img);
+                
+                // Add content container
+                const content = document.createElement('div');
+                content.className = 'figure-content';
+                
+                // Add name
+                const name = document.createElement('div');
+                name.className = 'figure-name';
+                name.textContent = figure.name;
+                content.appendChild(name);
+                
+                // Add country
+                const country = document.createElement('div');
+                country.className = 'figure-country';
+                const flagEmoji = getCountryFlag(figure.country);
+                country.innerHTML = `${flagEmoji} ${figure.country}`;
+                content.appendChild(country);
+                
+                // Add traits
+                const traits = document.createElement('div');
+                traits.className = 'figure-traits';
+                
+                // Get top 3 traits for this figure
+                const topTraits = getTopTraits(figure);
+                
+                // Add each top trait as a badge
+                topTraits.forEach(traitInfo => {
+                    const traitBadge = document.createElement('span');
+                    traitBadge.className = 'figure-trait';
+                    traitBadge.textContent = `${traitInfo.trait} (${Math.round(traitInfo.score * 100)}%)`;
+                    traits.appendChild(traitBadge);
+                });
+                
+                content.appendChild(traits);
+                
+                // Add description
+                const desc = document.createElement('p');
+                desc.className = 'figure-description';
+                desc.textContent = figure.description;
+                content.appendChild(desc);
+                
+                // Add Wikipedia button
+                const wikiUrl = figureWikiUrls[figure.name];
+                if (wikiUrl) {
+                    const wikiButton = document.createElement('a');
+                    wikiButton.href = wikiUrl;
+                    wikiButton.target = "_blank";
+                    wikiButton.rel = "noopener noreferrer";
+                    wikiButton.className = 'wiki-button';
+                    
+                    // Use official Wikipedia 'W' logo
+                    wikiButton.innerHTML = `
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia%27s_W.svg" alt="Wikipedia" width="16" height="16">
+                        Read on Wikipedia
+                    `;
+                    
+                    content.appendChild(wikiButton);
+                }
+                
+                // Add content to card
+                card.appendChild(content);
+                
+                // Add card to container
+                matchesContainer.appendChild(card);
+            });
+        }
+
+        // Function to get country flag emoji
+        function getCountryFlag(countryName) {
+            // Map of country names to ISO 3166-1 Alpha-2 codes for flag emojis
+            const countryCodeMap = {
+                "China": "CN",
+                "U.K.": "GB",
+                "S. Africa": "ZA",
+                "India": "IN",
+                "Turkey": "TR",
+                "Argentina": "AR",
+                "Cuba": "CU",
+                "Argentina/Cuba": "CU",
+                "USA": "US",
+                "N. Zealand": "NZ",
+                "Iran": "IR",
+                "Germany": "DE",
+                "Singapore": "SG",
+                "USSR": "RU",
+                "Russia": "RU",
+                "Sweden": "SE",
+                "Pakistan": "PK",
+                "Vatican": "VA",
+                "Vatican/Argentina": "VA",
+                "Brazil": "BR",
+                "Philippines": "PH",
+                "USA/S. Africa": "US",
+                "South America": "VE",
+            };
+            
+            // Special case for combined countries
+            if (countryName.includes("/")) {
+                const primaryCountry = countryName.split("/")[0];
+                countryName = primaryCountry;
+            }
+            
+            const code = countryCodeMap[countryName];
+            
+            if (!code) return "";
+            
+            // Convert country code to regional indicator symbols (flag emoji)
+            // Each letter is represented by a regional indicator symbol, which is 127397 code points after its ASCII value
+            const codePoints = [...code].map(char => 127397 + char.charCodeAt(0));
+            return String.fromCodePoint(...codePoints);
+        }
+
+        // Function to get top traits for a figure
+        function getTopTraits(figure) {
+            // All traits in order matching the numeric indices in figure.traits array
+            const allTraits = [
+                'Globalism', 'Progressivism', 'Nationalism', 'Individualism',
+                'Meritocracy', 'Traditionalism', 'Authority', 'Security',
+                'Liberty', 'Collectivism', 'Equality', 'Openness'
+            ];
+            
+            // Create array of trait names and their scores
+            const traitScores = figure.traits.map((score, index) => ({
+                trait: allTraits[index],
+                score: score
+            }));
+            
+            // Sort by score (descending) and get top 3
+            return traitScores.sort((a, b) => b.score - a.score).slice(0, 3);
         }
 
         function restartQuiz() {
+            // Destroy chart instance if it exists
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+            
+            // Clean up URL by removing query parameters
+            const baseUrl = window.location.pathname;
+            window.history.pushState({}, document.title, baseUrl);
+            
             // Reset all variables
             currentStep = 1;
             questionHistory = []; // Clear question history

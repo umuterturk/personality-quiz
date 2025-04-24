@@ -63,7 +63,7 @@
       "attributes": ["Equality", "Meritocracy", "Collectivism", "Individualism", "Authority", "Liberty", "Progressivism", "Traditionalism", "Globalism", "Nationalism"],
       "questions": [
         {
-          "question": "Should disadvantaged groups receive preferential treatment (for example, hiring quotas) to correct historical injustices?",
+          "question": "Should disadvantaged groups receive preferential treatment (for example, hiring quotas) to correct injustices in the society or in the past?",
           "answers": {
             "Yes":  { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.0, "Liberty": 0.7, "Progressivism": 2.8, "Traditionalism": 0.0, "Globalism": 1.5, "Nationalism": 0.3 },
             "No":   { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.5, "Liberty": 2.2, "Progressivism": 0.3, "Traditionalism": 2.0, "Globalism": 0.5, "Nationalism": 1.3 },
@@ -109,7 +109,7 @@
           }
         },
         {
-          "question": "Should governments have the power to censor online content they deem hateful or extremist, even if it means silencing legitimate political views?",
+          "question": "Should governments have the power to censor online content they deem hateful or extremist, even if it might silence legitimate political views?",
           "answers": {
             "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 2.6, "Individualism": 0.2, "Traditionalism": 0.9, "Progressivism": 1.9 },
             "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.3, "Individualism": 2.7, "Traditionalism": 1.3, "Progressivism": 1.2 },
@@ -259,7 +259,7 @@
                 }
             },
             {
-                "question": "Should a country put its own culture, security, and economic interests first, even if that means rejecting global cooperation or progressive reforms?",
+                "question": "Should a country put its own culture, security, and economic interests first, even if that might mean rejecting global cooperation, progressive reforms, or human rights?",
                 "answers": {
                     "Yes": { "Nationalism": 3.0, "Globalism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 1.2, "Liberty": 1.0, "Traditionalism": 2.5, "Progressivism": 0.1, "Individualism": 2.0, "Collectivism": 0.3 },
                     "No": { "Nationalism": 0.0, "Globalism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 1.0, "Liberty": 1.2, "Traditionalism": 0.1, "Progressivism": 2.7, "Individualism": 0.4, "Collectivism": 2.5 },
