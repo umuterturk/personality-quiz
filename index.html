@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Political Tendency Quiz</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8X8E31P73H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8X8E31P73H');
+    </script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -732,6 +740,13 @@
                 if (decodedScores) {
                     isSharedResult = true;
                     scores = decodedScores;
+                    
+                    // Track landing from shared link
+                    gtag('event', 'shared_link_landing', {
+                        'event_category': 'traffic',
+                        'event_label': 'Shared Link View'
+                    });
+                    
                     document.getElementById('startScreen').style.display = 'none';
                     showLoadingScreen();
                     return;
@@ -742,6 +757,12 @@
         }
 
         function startQuiz() {
+            // Track quiz start
+            gtag('event', 'quiz_started', {
+                'event_category': 'quiz_progress',
+                'event_label': 'Quiz Started'
+            });
+            
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('quizContent').style.display = 'block';
             showQuestion();
@@ -790,6 +811,16 @@
                 step: currentStep,
                 question: question,
                 answer: answerText
+            });
+            
+            // Track this step completion
+            gtag('event', 'quiz_step_completed', {
+                'event_category': 'quiz_progress',
+                'event_label': `Step ${currentStep} of 9`,
+                'step_number': currentStep,
+                'step_percentage': Math.round((currentStep / 9) * 100),
+                'question_text': question.question.substring(0, 50) + (question.question.length > 50 ? '...' : ''),
+                'answer_selected': answerText
             });
             
             Object.entries(answerScores).forEach(([attribute, score]) => {
@@ -1188,6 +1219,38 @@
             "Simón Bolívar": "https://en.wikipedia.org/wiki/Sim%C3%B3n_Bol%C3%ADvar"
         };
 
+        // Calculate cosine similarity between two vectors
+        function calculateCosineSimilarity(vectorA, vectorB) {
+            if (vectorA.length !== vectorB.length) {
+                throw new Error('Vectors must have the same length');
+            }
+            
+            // Convert figure's 0-1 scale to user's 0-100 scale for consistent comparison
+            const scaledVectorB = vectorB.map(value => value * 100);
+            
+            // Calculate magnitudes
+            const magnitudeA = Math.sqrt(vectorA.reduce((sum, val) => sum + val * val, 0));
+            const magnitudeB = Math.sqrt(scaledVectorB.reduce((sum, val) => sum + val * val, 0));
+            
+            // Handle zero vectors to avoid division by zero
+            if (magnitudeA === 0 || magnitudeB === 0) {
+                return 0;
+            }
+            
+            // Normalize vectors to unit vectors
+            const normalizedA = vectorA.map(val => val / magnitudeA);
+            const normalizedB = scaledVectorB.map(val => val / magnitudeB);
+            
+            // Calculate dot product of normalized vectors
+            let dotProduct = 0;
+            for (let i = 0; i < normalizedA.length; i++) {
+                dotProduct += normalizedA[i] * normalizedB[i];
+            }
+            
+            // Return cosine similarity (dot product of normalized vectors)
+            return dotProduct;
+        }
+
         // Find similar public figures based on user's scores
         function findSimilarFigures(normalizedScores) {
             // All possible traits (dimensions)
@@ -1198,13 +1261,14 @@
             ];
             
             const userVector = allTraits.map(trait => normalizedScores[trait] || 50); // Default to 50 if missing
+            
             // Calculate similarity scores for each figure using cosine similarity
             const similarities = publicFigures.map(figure => {
                 // Create figure vector from figure's traits array which now contains numeric values
                 // Each figure.traits is an array of 12 numeric values corresponding to the traits in allTraits
                 const figureVector = figure.traits;
                 
-                // Calculate cosine similarity
+                // Calculate cosine similarity with normalized vectors
                 const cosineSimilarity = calculateCosineSimilarity(userVector, figureVector);
                 
                 return {
@@ -1216,37 +1280,23 @@
             // Sort by similarity score (highest first)
             similarities.sort((a, b) => b.score - a.score);
             
-            // Take top 2 matches
+            // Take top matches
             const topMatches = similarities.slice(0, 2);
+            
+            // Track quiz completion with top 2 figures (only for users who completed the quiz, not direct URL landings)
+            if (!isSharedResult) {
+                gtag('event', 'quiz_completion', {
+                    'event_category': 'quiz',
+                    'event_label': 'Results',
+                    'top_figure_1': topMatches[0]?.figure?.name || 'Unknown',
+                    'top_figure_2': topMatches[1]?.figure?.name || 'Unknown',
+                    'match_score_1': Math.round((topMatches[0]?.score || 0) * 100),
+                    'match_score_2': Math.round((topMatches[1]?.score || 0) * 100)
+                });
+            }
             
             // Display the matches
             displaySimilarFigures(topMatches);
-        }
-        
-        // Calculate cosine similarity between two vectors
-        function calculateCosineSimilarity(vectorA, vectorB) {
-            if (vectorA.length !== vectorB.length) {
-                throw new Error('Vectors must have the same length');
-            }
-            
-            // Calculate dot product
-            let dotProduct = 0;
-            let normA = 0;
-            let normB = 0;
-            
-            for (let i = 0; i < vectorA.length; i++) {
-                dotProduct += vectorA[i] * vectorB[i];
-                normA += vectorA[i] * vectorA[i];
-                normB += vectorB[i] * vectorB[i];
-            }
-            
-            // Handle zero vectors to avoid division by zero
-            if (normA === 0 || normB === 0) {
-                return 0;
-            }
-            
-            // Return cosine similarity
-            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
         }
         
         // Display the similar figures in the results
@@ -1437,6 +1487,12 @@
         }
 
         function restartQuiz() {
+            // Track quiz restart
+            gtag('event', 'quiz_restart', {
+                'event_category': 'quiz_progress',
+                'event_label': 'Quiz Restarted'
+            });
+            
             // Destroy chart instance if it exists
             if (chartInstance) {
                 chartInstance.destroy();
@@ -1520,6 +1576,12 @@
             const encodedResults = encodeScores(scores);
             const shareUrl = `${baseUrl}?r=${encodedResults}`;
             const text = 'My Political Profile:';
+            
+            // Track share event
+            gtag('event', 'share', {
+                'event_category': 'engagement',
+                'event_label': platform
+            });
             
             switch (platform) {
                 case 'whatsapp':
