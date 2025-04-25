@@ -525,7 +525,7 @@
         }
         
         .figure-trait {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             background-color: rgba(52, 152, 219, 0.1);
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -654,6 +654,22 @@
             Nationalism: 0, Globalism: 0,
             Collectivism: 0, Individualism: 0,
             Equality: 0, Meritocracy: 0
+        };
+
+        // Define dimension labels as a global constant
+        const dimensionLabels = {
+            'Authority'      : 'Order‑Driven',
+            'Liberty'        : 'Freedom‑Oriented',
+            'Security'       : 'Safety‑Minded',
+            'Openness'       : 'Open‑Minded',
+            'Traditionalism' : 'Traditionalist',
+            'Progressivism'  : 'Progressivist',
+            'Nationalism'    : 'Nation‑Centric',
+            'Globalism'      : 'World‑Centric',
+            'Collectivism'   : 'Community‑Oriented',
+            'Individualism'  : 'Individualist',
+            'Equality'       : 'Fairness‑Focused',
+            'Meritocracy'    : 'Meritocratic'
         };
 
         // Function to encode scores to compact string
@@ -889,13 +905,19 @@
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('results').style.display = 'block';
 
+            // For display purposes only
             const normalizedScores = normalizeScores();
             
-            // Update URL with encoded results
+            // Update URL with encoded results - using RAW scores, not normalized
             if (!isSharedResult) {
-                const encodedResults = encodeScores(scores);
-                const newUrl = window.location.pathname + '?r=' + encodedResults;
-                window.history.pushState({ scores: scores }, 'Quiz Results', newUrl);
+                try {
+                    const encodedResults = encodeScores(scores);
+                    const newUrl = window.location.pathname + '?r=' + encodedResults;
+                    window.history.pushState({ scores: scores }, 'Quiz Results', newUrl);
+                    console.log("URL updated with raw scores");
+                } catch (error) {
+                    console.error("Error updating URL:", error);
+                }
             }
             
             const ctx = document.getElementById('radarChart').getContext('2d');
@@ -920,21 +942,6 @@
                 'Equality',        
                 'Openness'    
             ];
-
-            const dimensionLabels = {
-                'Authority'      : 'Order‑Driven',
-                'Liberty'        : 'Freedom‑Oriented',
-                'Security'       : 'Safety‑Minded',
-                'Openness'       : 'Open‑Minded',
-                'Traditionalism' : 'Tradition‑Focused',
-                'Progressivism'  : 'Progressivist',
-                'Nationalism'    : 'Nation‑Centric',
-                'Globalism'      : 'World‑Centric',
-                'Collectivism'   : 'Community‑Oriented',
-                'Individualism'  : 'Self‑Reliant',
-                'Equality'       : 'Fairness‑Focused',
-                'Meritocracy'    : 'Achievement‑Driven'
-              };
 
             chartInstance = new Chart(ctx, {
                 type: 'radar',
@@ -1472,7 +1479,9 @@
                 topTraits.forEach(traitInfo => {
                     const traitBadge = document.createElement('span');
                     traitBadge.className = 'figure-trait';
-                    traitBadge.textContent = `${traitInfo.trait} (${Math.round(traitInfo.score * 100)}%)`;
+                    // Use dimensionLabels instead of raw trait names
+                    const formattedTrait = dimensionLabels[traitInfo.trait] || traitInfo.trait;
+                    traitBadge.textContent = `${formattedTrait}`;
                     traits.appendChild(traitBadge);
                 });
                 
@@ -1502,7 +1511,7 @@
                     content.appendChild(wikiButton);
                 }
                 
-                // Add content to card
+                // Add card to content
                 card.appendChild(content);
                 
                 // Add card to container
@@ -1689,6 +1698,7 @@
 
         async function shareResults(platform) {
             const baseUrl = window.location.origin + window.location.pathname;
+            // Always use raw scores for encoding
             const encodedResults = encodeScores(scores);
             const shareUrl = `${baseUrl}?r=${encodedResults}`;
             const text = 'My Political Profile:';
@@ -1731,6 +1741,7 @@
 
         async function copyShareUrl(button) {
             const baseUrl = window.location.origin + window.location.pathname;
+            // Always use raw scores for encoding
             const encodedResults = encodeScores(scores);
             const shareUrl = `${baseUrl}?r=${encodedResults}`;
             
@@ -1750,7 +1761,10 @@
                     icon.classList.add('fa-link');
                 }, 2000);
                 
+                console.log("Share URL copied with raw scores");
+                
             } catch (err) {
+                console.error("Error copying URL:", err);
                 alert('Failed to copy URL. Please try again.');
             }
         }
