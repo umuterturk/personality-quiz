@@ -5,25 +5,25 @@
         {
           "question": "With the richest 1 % owning more wealth than the bottom 95 %, should governments redistribute wealth more aggressively?",
           "answers": {
-            "Yes":  { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.5, "Liberty": 0.5, "Progressivism": 2.0, "Traditionalism": 0.3 },
-            "No":   { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.3, "Liberty": 2.8, "Progressivism": 0.2, "Traditionalism": 1.5 },
-            "Neutral": { "Equality": 1.0, "Meritocracy": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0 }
+            "Yes":  { "Equality": 30, "Meritocracy": 0, "Collectivism": 30, "Individualism": 0, "Authority": 25, "Liberty": 5, "Progressivism": 20, "Traditionalism": 3 },
+            "No":   { "Equality": 0, "Meritocracy": 30, "Collectivism": 0, "Individualism": 30, "Authority": 3, "Liberty": 28, "Progressivism": 2, "Traditionalism": 15 },
+            "Neutral": { "Equality": 10, "Meritocracy": 10, "Collectivism": 10, "Individualism": 10, "Authority": 10, "Liberty": 10, "Progressivism": 10, "Traditionalism": 10 }
           }
         },
         {
           "question": "Is it morally acceptable for society to tolerate extreme wealth gaps if they arise from fair competition?",
           "answers": {
-            "Yes":  { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.2, "Liberty": 2.7, "Progressivism": 0.5, "Traditionalism": 1.0 },
-            "No":   { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.0, "Liberty": 0.5, "Progressivism": 2.2, "Traditionalism": 0.6 },
-            "Neutral": { "Equality": 1.0, "Meritocracy": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0 }
+            "Yes":  { "Equality": 0, "Meritocracy": 30, "Collectivism": 0, "Individualism": 30, "Authority": 2, "Liberty": 27, "Progressivism": 5, "Traditionalism": 10 },
+            "No":   { "Equality": 30, "Meritocracy": 0, "Collectivism": 30, "Individualism": 0, "Authority": 20, "Liberty": 5, "Progressivism": 22, "Traditionalism": 6 },
+            "Neutral": { "Equality": 10, "Meritocracy": 10, "Collectivism": 10, "Individualism": 10, "Authority": 10, "Liberty": 10, "Progressivism": 10, "Traditionalism": 10 }
           }
         },
         {
           "question": "Heavy taxation of the wealthy to support the poor is sometimes likened to theft. Do you find that comparison convincing?",
           "answers": {
-            "Yes":  { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.5, "Liberty": 2.8, "Progressivism": 0.2, "Traditionalism": 1.3 },
-            "No":   { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.4, "Liberty": 0.5, "Progressivism": 2.5, "Traditionalism": 0.2 },
-            "Neutral": { "Equality": 1.0, "Meritocracy": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0 }
+            "Yes":  { "Equality": 0, "Meritocracy": 30, "Collectivism": 0, "Individualism": 30, "Authority": 5, "Liberty": 28, "Progressivism": 2, "Traditionalism": 13 },
+            "No":   { "Equality": 30, "Meritocracy": 0, "Collectivism": 30, "Individualism": 0, "Authority": 24, "Liberty": 5, "Progressivism": 25, "Traditionalism": 2 },
+            "Neutral": { "Equality": 10, "Meritocracy": 10, "Collectivism": 10, "Individualism": 10, "Authority": 10, "Liberty": 10, "Progressivism": 10, "Traditionalism": 10 }
           }
         }
       ]
@@ -35,25 +35,25 @@
         {
           "question": "Should governments strictly regulate markets to protect workers and consumers, even at the cost of some economic efficiency?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Equality": 2.5, "Security": 2.3, "Openness": 0.7, "Progressivism": 1.8, "Traditionalism": 0.5, "Meritocracy": 0.6 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Equality": 0.3, "Security": 0.3, "Openness": 2.1, "Progressivism": 0.4, "Traditionalism": 1.5, "Meritocracy": 2.4 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Equality": 1.0, "Security": 1.0, "Openness": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0, "Meritocracy": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Collectivism": 30, "Individualism": 0, "Equality": 25, "Security": 23, "Openness": 7, "Progressivism": 18, "Traditionalism": 5, "Meritocracy": 6 },
+            "No":   { "Authority": 0, "Liberty": 30, "Collectivism": 0, "Individualism": 30, "Equality": 3, "Security": 3, "Openness": 21, "Progressivism": 4, "Traditionalism": 15, "Meritocracy": 24 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10, "Equality": 10, "Security": 10, "Openness": 10, "Progressivism": 10, "Traditionalism": 10, "Meritocracy": 10 }
           }
         },
         {
           "question": "Is a completely free market ultimately better for society than a regulated economy?",
           "answers": {
-            "Yes":  { "Authority": 0.0, "Liberty": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Equality": 0.2, "Security": 0.5, "Openness": 2.6, "Progressivism": 0.4, "Traditionalism": 1.5, "Meritocracy": 2.6 },
-            "No":   { "Authority": 3.0, "Liberty": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Equality": 2.5, "Security": 2.4, "Openness": 0.4, "Progressivism": 1.8, "Traditionalism": 0.6, "Meritocracy": 0.5 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Equality": 1.0, "Security": 1.0, "Openness": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0, "Meritocracy": 1.0 }
+            "Yes":  { "Authority": 0, "Liberty": 30, "Collectivism": 0, "Individualism": 30, "Equality": 2, "Security": 5, "Openness": 26, "Progressivism": 4, "Traditionalism": 15, "Meritocracy": 26 },
+            "No":   { "Authority": 30, "Liberty": 0, "Collectivism": 30, "Individualism": 0, "Equality": 25, "Security": 24, "Openness": 4, "Progressivism": 18, "Traditionalism": 6, "Meritocracy": 5 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10, "Equality": 10, "Security": 10, "Openness": 10, "Progressivism": 10, "Traditionalism": 10, "Meritocracy": 10 }
           }
         },
         {
           "question": "Should essential services like healthcare or education be provided by the state rather than left to private markets?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Equality": 2.8, "Security": 2.2, "Openness": 0.5, "Progressivism": 2.0, "Traditionalism": 0.3, "Meritocracy": 0.4 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Equality": 0.3, "Security": 0.4, "Openness": 2.5, "Progressivism": 0.5, "Traditionalism": 1.6, "Meritocracy": 2.5 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Equality": 1.0, "Security": 1.0, "Openness": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0, "Meritocracy": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Collectivism": 30, "Individualism": 0, "Equality": 28, "Security": 22, "Openness": 5, "Progressivism": 20, "Traditionalism": 3, "Meritocracy": 4 },
+            "No":   { "Authority": 0, "Liberty": 30, "Collectivism": 0, "Individualism": 30, "Equality": 3, "Security": 4, "Openness": 25, "Progressivism": 5, "Traditionalism": 16, "Meritocracy": 25 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10, "Equality": 10, "Security": 10, "Openness": 10, "Progressivism": 10, "Traditionalism": 10, "Meritocracy": 10 }
           }
         }
       ]
@@ -65,25 +65,25 @@
         {
           "question": "Should disadvantaged groups receive preferential treatment (for example, hiring quotas) to correct injustices in the society or in the past?",
           "answers": {
-            "Yes":  { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.0, "Liberty": 0.7, "Progressivism": 2.8, "Traditionalism": 0.0, "Globalism": 1.5, "Nationalism": 0.3 },
-            "No":   { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.5, "Liberty": 2.2, "Progressivism": 0.3, "Traditionalism": 2.0, "Globalism": 0.5, "Nationalism": 1.3 },
-            "Neutral": { "Equality": 1.0, "Meritocracy": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0, "Globalism": 1.0, "Nationalism": 1.0 }
+            "Yes":  { "Equality": 30, "Meritocracy": 0, "Collectivism": 30, "Individualism": 0, "Authority": 20, "Liberty": 7, "Progressivism": 28, "Traditionalism": 0, "Globalism": 15, "Nationalism": 3 },
+            "No":   { "Equality": 0, "Meritocracy": 30, "Collectivism": 0, "Individualism": 30, "Authority": 5, "Liberty": 22, "Progressivism": 3, "Traditionalism": 20, "Globalism": 5, "Nationalism": 13 },
+            "Neutral": { "Equality": 10, "Meritocracy": 10, "Collectivism": 10, "Individualism": 10, "Authority": 10, "Liberty": 10, "Progressivism": 10, "Traditionalism": 10, "Globalism": 10, "Nationalism": 10 }
           }
         },
         {
           "question": "Is it wrong to select a qualified candidate from an under‑represented group over a more‑qualified candidate to increase diversity?",
           "answers": {
-            "Yes":  { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.3, "Liberty": 2.0, "Progressivism": 0.2, "Traditionalism": 2.1, "Globalism": 0.5, "Nationalism": 1.5 },
-            "No":   { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.2, "Liberty": 0.4, "Progressivism": 2.7, "Traditionalism": 0.1, "Globalism": 1.6, "Nationalism": 0.4 },
-            "Neutral": { "Equality": 1.0, "Meritocracy": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0, "Globalism": 1.0, "Nationalism": 1.0 }
+            "Yes":  { "Equality": 0, "Meritocracy": 30, "Collectivism": 0, "Individualism": 30, "Authority": 3, "Liberty": 20, "Progressivism": 2, "Traditionalism": 21, "Globalism": 5, "Nationalism": 15 },
+            "No":   { "Equality": 30, "Meritocracy": 0, "Collectivism": 30, "Individualism": 0, "Authority": 22, "Liberty": 4, "Progressivism": 27, "Traditionalism": 1, "Globalism": 16, "Nationalism": 4 },
+            "Neutral": { "Equality": 10, "Meritocracy": 10, "Collectivism": 10, "Individualism": 10, "Authority": 10, "Liberty": 10, "Progressivism": 10, "Traditionalism": 10, "Globalism": 10, "Nationalism": 10 }
           }
         },
         {
           "question": "Do you support affirmative action policies that give preference to underrepresented groups in education and employment?",
           "answers": {
-            "Yes":  { "Equality": 3.0, "Meritocracy": 0.0, "Collectivism": 3.0, "Individualism": 0.0, "Authority": 2.1, "Liberty": 0.5, "Progressivism": 2.8, "Traditionalism": 0.0, "Globalism": 1.7, "Nationalism": 0.3 },
-            "No":   { "Equality": 0.0, "Meritocracy": 3.0, "Collectivism": 0.0, "Individualism": 3.0, "Authority": 0.4, "Liberty": 2.3, "Progressivism": 0.2, "Traditionalism": 2.0, "Globalism": 0.4, "Nationalism": 1.5 },
-            "Neutral": { "Equality": 1.0, "Meritocracy": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Progressivism": 1.0, "Traditionalism": 1.0, "Globalism": 1.0, "Nationalism": 1.0 }
+            "Yes":  { "Equality": 30, "Meritocracy": 0, "Collectivism": 30, "Individualism": 0, "Authority": 21, "Liberty": 5, "Progressivism": 28, "Traditionalism": 0, "Globalism": 17, "Nationalism": 3 },
+            "No":   { "Equality": 0, "Meritocracy": 30, "Collectivism": 0, "Individualism": 30, "Authority": 4, "Liberty": 23, "Progressivism": 2, "Traditionalism": 20, "Globalism": 4, "Nationalism": 15 },
+            "Neutral": { "Equality": 10, "Meritocracy": 10, "Collectivism": 10, "Individualism": 10, "Authority": 10, "Liberty": 10, "Progressivism": 10, "Traditionalism": 10, "Globalism": 10, "Nationalism": 10 }
           }
         }
       ]
@@ -95,25 +95,25 @@
         {
           "question": "Should speech that offends certain groups be legally restricted, even if it might damage free expression?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 2.5, "Individualism": 0.3, "Traditionalism": 0.8, "Progressivism": 2.0 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.2, "Individualism": 2.8, "Traditionalism": 1.2, "Progressivism": 1.3 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Security": 1.0, "Openness": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Security": 30, "Openness": 0, "Collectivism": 25, "Individualism": 3, "Traditionalism": 8, "Progressivism": 20 },
+            "No":   { "Authority": 0, "Liberty": 30, "Security": 0, "Openness": 30, "Collectivism": 2, "Individualism": 28, "Traditionalism": 12, "Progressivism": 13 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Security": 10, "Openness": 10, "Collectivism": 10, "Individualism": 10, "Traditionalism": 10, "Progressivism": 10 }
           }
         },
         {
           "question": "During a severe public‑health crisis, should governments restrict movement and mandate vaccinations for the greater good?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 2.7, "Individualism": 0.1, "Traditionalism": 0.7, "Progressivism": 1.8 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.2, "Individualism": 2.9, "Traditionalism": 1.4, "Progressivism": 0.9 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Security": 1.0, "Openness": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Security": 30, "Openness": 0, "Collectivism": 27, "Individualism": 1, "Traditionalism": 7, "Progressivism": 18 },
+            "No":   { "Authority": 0, "Liberty": 30, "Security": 0, "Openness": 30, "Collectivism": 2, "Individualism": 29, "Traditionalism": 14, "Progressivism": 9 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Security": 10, "Openness": 10, "Collectivism": 10, "Individualism": 10, "Traditionalism": 10, "Progressivism": 10 }
           }
         },
         {
           "question": "Should governments have the power to censor online content they deem hateful or extremist, even if it might silence legitimate political views?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 2.6, "Individualism": 0.2, "Traditionalism": 0.9, "Progressivism": 1.9 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.3, "Individualism": 2.7, "Traditionalism": 1.3, "Progressivism": 1.2 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Security": 1.0, "Openness": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Security": 30, "Openness": 0, "Collectivism": 26, "Individualism": 2, "Traditionalism": 9, "Progressivism": 19 },
+            "No":   { "Authority": 0, "Liberty": 30, "Security": 0, "Openness": 30, "Collectivism": 3, "Individualism": 27, "Traditionalism": 13, "Progressivism": 12 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Security": 10, "Openness": 10, "Collectivism": 10, "Individualism": 10, "Traditionalism": 10, "Progressivism": 10 }
           }
         }
       ]
@@ -125,25 +125,25 @@
         {
           "question": "Should we be willing to slow economic growth if that's what it takes to prevent climate catastrophe?",
           "answers": {
-            "Yes":  { "Progressivism": 3.0, "Traditionalism": 0.0, "Security": 3.0, "Openness": 0.0, "Globalism": 2.8, "Nationalism": 0.2, "Collectivism": 2.5, "Individualism": 0.3 },
-            "No":   { "Progressivism": 0.0, "Traditionalism": 3.0, "Security": 0.0, "Openness": 3.0, "Globalism": 0.3, "Nationalism": 2.5, "Collectivism": 0.4, "Individualism": 2.7 },
-            "Neutral": { "Progressivism": 1.0, "Traditionalism": 1.0, "Security": 1.0, "Openness": 1.0, "Globalism": 1.0, "Nationalism": 1.0, "Collectivism": 1.0, "Individualism": 1.0 }
+            "Yes":  { "Progressivism": 30, "Traditionalism": 0, "Security": 30, "Openness": 0, "Globalism": 28, "Nationalism": 2, "Collectivism": 25, "Individualism": 3 },
+            "No":   { "Progressivism": 0, "Traditionalism": 30, "Security": 0, "Openness": 30, "Globalism": 3, "Nationalism": 25, "Collectivism": 4, "Individualism": 27 },
+            "Neutral": { "Progressivism": 10, "Traditionalism": 10, "Security": 10, "Openness": 10, "Globalism": 10, "Nationalism": 10, "Collectivism": 10, "Individualism": 10 }
           }
         },
         {
           "question": "Would you accept a lower personal standard of living if it meant a healthier planet for future generations?",
           "answers": {
-            "Yes":  { "Progressivism": 3.0, "Traditionalism": 0.0, "Security": 3.0, "Openness": 0.0, "Globalism": 2.6, "Nationalism": 0.3, "Collectivism": 2.7, "Individualism": 0.2 },
-            "No":   { "Progressivism": 0.0, "Traditionalism": 3.0, "Security": 0.0, "Openness": 3.0, "Globalism": 0.2, "Nationalism": 2.4, "Collectivism": 0.3, "Individualism": 2.8 },
-            "Neutral": { "Progressivism": 1.0, "Traditionalism": 1.0, "Security": 1.0, "Openness": 1.0, "Globalism": 1.0, "Nationalism": 1.0, "Collectivism": 1.0, "Individualism": 1.0 }
+            "Yes":  { "Progressivism": 30, "Traditionalism": 0, "Security": 30, "Openness": 0, "Globalism": 26, "Nationalism": 3, "Collectivism": 27, "Individualism": 2 },
+            "No":   { "Progressivism": 0, "Traditionalism": 30, "Security": 0, "Openness": 30, "Globalism": 2, "Nationalism": 24, "Collectivism": 3, "Individualism": 28 },
+            "Neutral": { "Progressivism": 10, "Traditionalism": 10, "Security": 10, "Openness": 10, "Globalism": 10, "Nationalism": 10, "Collectivism": 10, "Individualism": 10 }
           }
         },
         {
           "question": "Should environmental protection outweigh profits even if it means stricter rules and higher prices?",
           "answers": {
-            "Yes":  { "Progressivism": 3.0, "Traditionalism": 0.0, "Security": 3.0, "Openness": 0.0, "Globalism": 2.7, "Nationalism": 0.2, "Collectivism": 2.6, "Individualism": 0.3 },
-            "No":   { "Progressivism": 0.0, "Traditionalism": 3.0, "Security": 0.0, "Openness": 3.0, "Globalism": 0.3, "Nationalism": 2.3, "Collectivism": 0.2, "Individualism": 2.7 },
-            "Neutral": { "Progressivism": 1.0, "Traditionalism": 1.0, "Security": 1.0, "Openness": 1.0, "Globalism": 1.0, "Nationalism": 1.0, "Collectivism": 1.0, "Individualism": 1.0 }
+            "Yes":  { "Progressivism": 30, "Traditionalism": 0, "Security": 30, "Openness": 0, "Globalism": 27, "Nationalism": 2, "Collectivism": 26, "Individualism": 3 },
+            "No":   { "Progressivism": 0, "Traditionalism": 30, "Security": 0, "Openness": 30, "Globalism": 3, "Nationalism": 23, "Collectivism": 2, "Individualism": 27 },
+            "Neutral": { "Progressivism": 10, "Traditionalism": 10, "Security": 10, "Openness": 10, "Globalism": 10, "Nationalism": 10, "Collectivism": 10, "Individualism": 10 }
           }
         }
       ]
@@ -155,25 +155,25 @@
         {
           "question": "Is mass surveillance by governments justified to prevent terrorism?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 1.8, "Individualism": 0.5, "Traditionalism": 1.5, "Progressivism": 0.7 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.7, "Individualism": 2.5, "Traditionalism": 0.8, "Progressivism": 1.5 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Security": 1.0, "Openness": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Security": 30, "Openness": 0, "Collectivism": 18, "Individualism": 5, "Traditionalism": 15, "Progressivism": 7 },
+            "No":   { "Authority": 0, "Liberty": 30, "Security": 0, "Openness": 30, "Collectivism": 7, "Individualism": 25, "Traditionalism": 8, "Progressivism": 15 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Security": 10, "Openness": 10, "Collectivism": 10, "Individualism": 10, "Traditionalism": 10, "Progressivism": 10 }
           }
         },
         {
           "question": "Should social media platforms be allowed to censor content they deem hateful or false, even in the cost of free speech potential?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 2.4, "Individualism": 0.2, "Traditionalism": 0.4, "Progressivism": 2.3 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.3, "Individualism": 2.8, "Traditionalism": 1.7, "Progressivism": 0.6 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Security": 1.0, "Openness": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Security": 30, "Openness": 0, "Collectivism": 24, "Individualism": 2, "Traditionalism": 4, "Progressivism": 23 },
+            "No":   { "Authority": 0, "Liberty": 30, "Security": 0, "Openness": 30, "Collectivism": 3, "Individualism": 28, "Traditionalism": 17, "Progressivism": 6 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Security": 10, "Openness": 10, "Collectivism": 10, "Individualism": 10, "Traditionalism": 10, "Progressivism": 10 }
           }
         },
         {
           "question": "Should development of advanced AI be strictly controlled, even if it slows technological progress?",
           "answers": {
-            "Yes":  { "Authority": 3.0, "Liberty": 0.0, "Security": 3.0, "Openness": 0.0, "Collectivism": 2.0, "Individualism": 0.5, "Traditionalism": 1.2, "Progressivism": 1.3 },
-            "No":   { "Authority": 0.0, "Liberty": 3.0, "Security": 0.0, "Openness": 3.0, "Collectivism": 0.5, "Individualism": 2.4, "Traditionalism": 0.4, "Progressivism": 2.0 },
-            "Neutral": { "Authority": 1.0, "Liberty": 1.0, "Security": 1.0, "Openness": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0 }
+            "Yes":  { "Authority": 30, "Liberty": 0, "Security": 30, "Openness": 0, "Collectivism": 20, "Individualism": 5, "Traditionalism": 12, "Progressivism": 13 },
+            "No":   { "Authority": 0, "Liberty": 30, "Security": 0, "Openness": 30, "Collectivism": 5, "Individualism": 24, "Traditionalism": 4, "Progressivism": 20 },
+            "Neutral": { "Authority": 10, "Liberty": 10, "Security": 10, "Openness": 10, "Collectivism": 10, "Individualism": 10, "Traditionalism": 10, "Progressivism": 10 }
           }
         }
       ]
@@ -185,25 +185,25 @@
         {
           "question": "Should secular values take precedence over personal religious beliefs in matters of public policy and law?",
           "answers": {
-            "Yes":  { "Traditionalism": 0.0, "Progressivism": 3.0, "Authority": 3.0, "Liberty": 0.0, "Collectivism": 2.5, "Individualism": 0.4, "Security": 2.0, "Openness": 0.5 },
-            "No":   { "Traditionalism": 3.0, "Progressivism": 0.0, "Authority": 0.0, "Liberty": 3.0, "Collectivism": 0.5, "Individualism": 2.6, "Security": 0.3, "Openness": 2.2 },
-            "Neutral": { "Traditionalism": 1.0, "Progressivism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0, "Security": 1.0, "Openness": 1.0 }
+            "Yes":  { "Traditionalism": 0, "Progressivism": 30, "Authority": 30, "Liberty": 0, "Collectivism": 25, "Individualism": 4, "Security": 20, "Openness": 5 },
+            "No":   { "Traditionalism": 30, "Progressivism": 0, "Authority": 0, "Liberty": 30, "Collectivism": 5, "Individualism": 26, "Security": 3, "Openness": 22 },
+            "Neutral": { "Traditionalism": 10, "Progressivism": 10, "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10, "Security": 10, "Openness": 10 }
           }
         },
         {
           "question": "Should individuals get legal exemptions if laws conflict with their sincere religious beliefs?",
           "answers": {
-            "Yes":  { "Traditionalism": 3.0, "Progressivism": 0.0, "Authority": 3.0, "Liberty": 0.0, "Individualism": 2.5, "Collectivism": 0.4, "Security": 0.3, "Openness": 2.0 },
-            "No":   { "Traditionalism": 0.0, "Progressivism": 3.0, "Authority": 0.0, "Liberty": 3.0, "Individualism": 0.5, "Collectivism": 2.3, "Security": 2.0, "Openness": 0.4 },
-            "Neutral": { "Traditionalism": 1.0, "Progressivism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Individualism": 1.0, "Collectivism": 1.0, "Security": 1.0, "Openness": 1.0 }
+            "Yes":  { "Traditionalism": 30, "Progressivism": 0, "Authority": 30, "Liberty": 0, "Individualism": 25, "Collectivism": 4, "Security": 3, "Openness": 20 },
+            "No":   { "Traditionalism": 0, "Progressivism": 30, "Authority": 0, "Liberty": 30, "Individualism": 5, "Collectivism": 23, "Security": 20, "Openness": 4 },
+            "Neutral": { "Traditionalism": 10, "Progressivism": 10, "Authority": 10, "Liberty": 10, "Individualism": 10, "Collectivism": 10, "Security": 10, "Openness": 10 }
           }
         },
         {
           "question": "Should societies prioritize preserving religious and cultural traditions even when they may conflict with evolving individual and human rights?",
           "answers": {
-            "Yes":  { "Traditionalism": 3.0, "Progressivism": 0.0, "Authority": 3.0, "Liberty": 0.0, "Individualism": 0.5, "Collectivism": 2.0, "Security": 2.3, "Openness": 0.2 },
-            "No":   { "Traditionalism": 0.0, "Progressivism": 3.0, "Authority": 0.0, "Liberty": 3.0, "Individualism": 2.0, "Collectivism": 0.7, "Security": 0.3, "Openness": 2.5 },
-            "Neutral": { "Traditionalism": 1.0, "Progressivism": 1.0, "Authority": 1.0, "Liberty": 1.0, "Individualism": 1.0, "Collectivism": 1.0, "Security": 1.0, "Openness": 1.0 }
+            "Yes":  { "Traditionalism": 30, "Progressivism": 0, "Authority": 30, "Liberty": 0, "Individualism": 5, "Collectivism": 20, "Security": 23, "Openness": 2 },
+            "No":   { "Traditionalism": 0, "Progressivism": 30, "Authority": 0, "Liberty": 30, "Individualism": 20, "Collectivism": 7, "Security": 3, "Openness": 25 },
+            "Neutral": { "Traditionalism": 10, "Progressivism": 10, "Authority": 10, "Liberty": 10, "Individualism": 10, "Collectivism": 10, "Security": 10, "Openness": 10 }
           }
         }
       ]
@@ -215,25 +215,25 @@
         {
           "question": "Have modern societies gone too far in discarding traditional values and customs?",
           "answers": {
-            "Yes":  { "Traditionalism": 3.0, "Progressivism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 2.0, "Liberty": 0.7, "Collectivism": 1.8, "Individualism": 0.5 },
-            "No":   { "Traditionalism": 0.0, "Progressivism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 0.5, "Liberty": 2.3, "Collectivism": 0.6, "Individualism": 2.2 },
-            "Neutral": { "Traditionalism": 1.0, "Progressivism": 1.0, "Security": 1.0, "Openness": 1.0, "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0 }
+            "Yes":  { "Traditionalism": 30, "Progressivism": 0, "Security": 30, "Openness": 0, "Authority": 20, "Liberty": 7, "Collectivism": 18, "Individualism": 5 },
+            "No":   { "Traditionalism": 0, "Progressivism": 30, "Security": 0, "Openness": 30, "Authority": 5, "Liberty": 23, "Collectivism": 6, "Individualism": 22 },
+            "Neutral": { "Traditionalism": 10, "Progressivism": 10, "Security": 10, "Openness": 10, "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10 }
           }
         },
         {
           "question": "Are traditional family values and gender roles still worth defending in modern society?",
           "answers": {
-            "Yes":  { "Traditionalism": 3.0, "Progressivism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 2.4, "Liberty": 0.3, "Collectivism": 1.5, "Individualism": 0.8 },
-            "No":   { "Traditionalism": 0.0, "Progressivism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 0.3, "Liberty": 2.5, "Collectivism": 0.8, "Individualism": 2.2 },
-            "Neutral": { "Traditionalism": 1.0, "Progressivism": 1.0, "Security": 1.0, "Openness": 1.0, "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0 }
+            "Yes":  { "Traditionalism": 30, "Progressivism": 0, "Security": 30, "Openness": 0, "Authority": 24, "Liberty": 3, "Collectivism": 15, "Individualism": 8 },
+            "No":   { "Traditionalism": 0, "Progressivism": 30, "Security": 0, "Openness": 30, "Authority": 3, "Liberty": 25, "Collectivism": 8, "Individualism": 22 },
+            "Neutral": { "Traditionalism": 10, "Progressivism": 10, "Security": 10, "Openness": 10, "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10 }
           }
         },
         {
           "question": "Should longstanding moral norms be upheld even if they restrict personal freedoms or conflict with contemporary views?",
           "answers": {
-            "Yes":  { "Traditionalism": 3.0, "Progressivism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 2.6, "Liberty": 0.2, "Collectivism": 1.7, "Individualism": 0.4 },
-            "No":   { "Traditionalism": 0.0, "Progressivism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 0.2, "Liberty": 2.7, "Collectivism": 0.5, "Individualism": 2.3 },
-            "Neutral": { "Traditionalism": 1.0, "Progressivism": 1.0, "Security": 1.0, "Openness": 1.0, "Authority": 1.0, "Liberty": 1.0, "Collectivism": 1.0, "Individualism": 1.0 }
+            "Yes":  { "Traditionalism": 30, "Progressivism": 0, "Security": 30, "Openness": 0, "Authority": 26, "Liberty": 2, "Collectivism": 17, "Individualism": 4 },
+            "No":   { "Traditionalism": 0, "Progressivism": 30, "Security": 0, "Openness": 30, "Authority": 2, "Liberty": 27, "Collectivism": 5, "Individualism": 23 },
+            "Neutral": { "Traditionalism": 10, "Progressivism": 10, "Security": 10, "Openness": 10, "Authority": 10, "Liberty": 10, "Collectivism": 10, "Individualism": 10 }
           }
         }
       ]
@@ -245,25 +245,25 @@
             {
                 "question": "Should your country quit a defense alliance rather than let foreign troops be stationed on its soil even if it might mean a loss of national sovereignty?",
                 "answers": {
-                    "Yes": { "Nationalism": 3.0, "Globalism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 1.8, "Liberty": 0.5, "Traditionalism": 1.5, "Progressivism": 0.3, "Individualism": 0.8, "Collectivism": 1.5 },
-                    "No": { "Nationalism": 0.0, "Globalism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 0.8, "Liberty": 1.7, "Traditionalism": 0.3, "Progressivism": 2.0, "Individualism": 1.5, "Collectivism": 2.2 },
-                    "Neutral": { "Nationalism": 1.0, "Globalism": 1.0, "Security": 1.0, "Openness": 1.0, "Authority": 1.0, "Liberty": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0, "Individualism": 1.0, "Collectivism": 1.0 }
+                    "Yes": { "Nationalism": 30, "Globalism": 0, "Security": 30, "Openness": 0, "Authority": 18, "Liberty": 5, "Traditionalism": 15, "Progressivism": 3, "Individualism": 8, "Collectivism": 15 },
+                    "No": { "Nationalism": 0, "Globalism": 30, "Security": 0, "Openness": 30, "Authority": 8, "Liberty": 17, "Traditionalism": 3, "Progressivism": 20, "Individualism": 15, "Collectivism": 22 },
+                    "Neutral": { "Nationalism": 10, "Globalism": 10, "Security": 10, "Openness": 10, "Authority": 10, "Liberty": 10, "Traditionalism": 10, "Progressivism": 10, "Individualism": 10, "Collectivism": 10 }
                 }
             },
             {
                 "question": "Should a country withdraw from international organizations like the UN if it believes its sovereignty is being undermined?",
                 "answers": {
-                    "Yes": { "Nationalism": 3.0, "Globalism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 1.5, "Liberty": 0.8, "Traditionalism": 1.8, "Progressivism": 0.2, "Individualism": 1.7, "Collectivism": 0.5 },
-                    "No": { "Nationalism": 0.0, "Globalism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 0.7, "Liberty": 1.5, "Traditionalism": 0.2, "Progressivism": 2.2, "Individualism": 0.6, "Collectivism": 2.3 },
-                    "Neutral": { "Nationalism": 1.0, "Globalism": 1.0, "Security": 1.0, "Openness": 1.0, "Authority": 1.0, "Liberty": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0, "Individualism": 1.0, "Collectivism": 1.0 }
+                    "Yes": { "Nationalism": 30, "Globalism": 0, "Security": 30, "Openness": 0, "Authority": 15, "Liberty": 8, "Traditionalism": 18, "Progressivism": 2, "Individualism": 17, "Collectivism": 5 },
+                    "No": { "Nationalism": 0, "Globalism": 30, "Security": 0, "Openness": 30, "Authority": 7, "Liberty": 15, "Traditionalism": 2, "Progressivism": 22, "Individualism": 6, "Collectivism": 23 },
+                    "Neutral": { "Nationalism": 10, "Globalism": 10, "Security": 10, "Openness": 10, "Authority": 10, "Liberty": 10, "Traditionalism": 10, "Progressivism": 10, "Individualism": 10, "Collectivism": 10 }
                 }
             },
             {
                 "question": "Should a country put its own culture, security, and economic interests first, even if that might mean rejecting global cooperation, progressive reforms, or human rights?",
                 "answers": {
-                    "Yes": { "Nationalism": 3.0, "Globalism": 0.0, "Security": 3.0, "Openness": 0.0, "Authority": 1.2, "Liberty": 1.0, "Traditionalism": 2.5, "Progressivism": 0.1, "Individualism": 2.0, "Collectivism": 0.3 },
-                    "No": { "Nationalism": 0.0, "Globalism": 3.0, "Security": 0.0, "Openness": 3.0, "Authority": 1.0, "Liberty": 1.2, "Traditionalism": 0.1, "Progressivism": 2.7, "Individualism": 0.4, "Collectivism": 2.5 },
-                    "Neutral": { "Nationalism": 1.0, "Globalism": 1.0, "Security": 1.0, "Openness": 1.0, "Authority": 1.0, "Liberty": 1.0, "Traditionalism": 1.0, "Progressivism": 1.0, "Individualism": 1.0, "Collectivism": 1.0 }
+                    "Yes": { "Nationalism": 30, "Globalism": 0, "Security": 30, "Openness": 0, "Authority": 12, "Liberty": 10, "Traditionalism": 25, "Progressivism": 1, "Individualism": 20, "Collectivism": 3 },
+                    "No": { "Nationalism": 0, "Globalism": 30, "Security": 0, "Openness": 30, "Authority": 10, "Liberty": 12, "Traditionalism": 1, "Progressivism": 27, "Individualism": 4, "Collectivism": 25 },
+                    "Neutral": { "Nationalism": 10, "Globalism": 10, "Security": 10, "Openness": 10, "Authority": 10, "Liberty": 10, "Traditionalism": 10, "Progressivism": 10, "Individualism": 10, "Collectivism": 10 }
                 }
             }
         ]

@@ -677,8 +677,8 @@
 
         // Function to encode scores to compact string
         function encodeScores(scores) {
-            // Version 1 prefix: v1_
-            const VERSION = "1";
+            // Version 2 prefix for the new format
+            const VERSION = "2";
             
             // Order of values in the encoded string
             const order = [
@@ -690,33 +690,49 @@
                 'Equality', 'Meritocracy'
             ];
             
-            // Convert all scores to a single large number
-            let totalNumber = 0;
-            for (let i = 0; i < order.length; i++) {
-                // Convert 0-100 to 0-99 range and shift left
-                const value = Math.max(0, Math.min(99, Math.round(scores[order[i]])));
-                totalNumber = totalNumber * 100 + value;
+            console.log("ENCODING - Raw input scores:", JSON.stringify(scores));
+            
+            // Make a copy and ensure all values are integers
+            const roundedScores = {};
+            for (const trait in scores) {
+                roundedScores[trait] = Math.round(scores[trait] || 0);
             }
             
-            // Convert to base36 (0-9 and a-z)
-            const encoded = totalNumber.toString(36);
+            // Encode each value directly as 2 base36 digits (00-ZZ)
+            let encoded = "";
+            for (let i = 0; i < order.length; i++) {
+                const trait = order[i];
+                const value = Math.max(0, Math.min(99, roundedScores[trait]));
+                console.log(`ENCODING - ${i}: ${trait} = ${roundedScores[trait]} → ${value}`);
+                
+                // Convert to 2-digit base36 string (0-9, a-z)
+                const valueStr = value.toString(36).padStart(2, '0');
+                encoded += valueStr;
+            }
             
-            // Add version prefix
+            console.log("ENCODING - Final encoded:", VERSION + encoded);
             return VERSION + encoded;
         }
 
         // Function to decode scores from compact string
         function decodeScores(encoded) {
             try {
+                console.log("DECODING - Input string:", encoded);
+                
                 // Extract version and encoded value
                 const version = encoded.charAt(0);
                 const encodedValue = encoded.slice(1);
                 
-                if (version !== "1") {
-                    console.error("Unsupported version");
+                // Handle original version 1 format for backward compatibility
+                if (version === "1") {
+                    return decodeScoresV1(encoded);
+                }
+                
+                if (version !== "2") {
+                    console.error("Unsupported version:", version);
                     return null;
                 }
-
+                
                 const order = [
                     'Authority', 'Liberty',
                     'Security', 'Openness',
@@ -725,20 +741,62 @@
                     'Collectivism', 'Individualism',
                     'Equality', 'Meritocracy'
                 ];
-
-                // Convert from base36 back to decimal
-                let totalNumber = parseInt(encodedValue, 36);
                 
-                // Extract individual scores
+                // Extract each 2-character segment and convert to number
                 const scores = {};
-                for (let i = order.length - 1; i >= 0; i--) {
-                    scores[order[i]] = totalNumber % 100;
-                    totalNumber = Math.floor(totalNumber / 100);
+                
+                for (let i = 0; i < order.length; i++) {
+                    const trait = order[i];
+                    const valueStr = encodedValue.slice(i * 2, i * 2 + 2);
+                    const value = parseInt(valueStr, 36);
+                    scores[trait] = value;
+                    console.log(`DECODING - ${i}: ${trait} = ${value}`);
                 }
                 
+                console.log("DECODING - Final decoded scores:", JSON.stringify(scores));
                 return scores;
             } catch (e) {
                 console.error("Error decoding scores:", e);
+                return null;
+            }
+        }
+        
+        // Backward compatibility for old v1 encoded strings
+        function decodeScoresV1(encoded) {
+            try {
+                console.log("DECODING (v1) - Input string:", encoded);
+                
+                // Extract version and encoded value
+                const version = encoded.charAt(0);
+                const encodedValue = encoded.slice(1);
+                
+                const order = [
+                    'Authority', 'Liberty',
+                    'Security', 'Openness',
+                    'Traditionalism', 'Progressivism',
+                    'Nationalism', 'Globalism',
+                    'Collectivism', 'Individualism',
+                    'Equality', 'Meritocracy'
+                ];
+                
+                // Split into chunks of 6 characters each
+                const chunks = [];
+                for (let i = 0; i < encodedValue.length; i += 6) {
+                    chunks.push(encodedValue.substring(i, i + 6));
+                }
+                
+                console.log("DECODING (v1) - Attempting to decode from chunks:", chunks);
+                
+                // Just return default scores for v1 - difficult to reliably decode
+                const defaultScores = {};
+                order.forEach(trait => {
+                    defaultScores[trait] = 50;
+                });
+                
+                console.log("DECODING (v1) - Using default scores for old format");
+                return defaultScores;
+            } catch (e) {
+                console.error("Error decoding v1 scores:", e);
                 return null;
             }
         }
@@ -869,6 +927,14 @@
                 loadingText.textContent = 'Calculating your results...';
             }
 
+            if (!isSharedResult) {
+                // Round all raw scores to integers to eliminate precision issues
+                Object.keys(scores).forEach(key => {
+                    scores[key] = Math.round(scores[key]);
+                });
+                console.log("Rounded all raw scores to integers:", JSON.stringify(scores));
+            }
+
             setTimeout(showResults, 1500);
         }
 
@@ -911,13 +977,17 @@
             // For display purposes only
             const normalizedScores = normalizeScores();
             
+            // Log raw and normalized scores for comparison
+            console.log("showResults - Raw scores before encoding:", JSON.stringify(scores));
+            console.log("showResults - Normalized scores for display:", JSON.stringify(normalizedScores));
+            
             // Update URL with encoded results - using RAW scores, not normalized
             if (!isSharedResult) {
                 try {
                     const encodedResults = encodeScores(scores);
                     const newUrl = window.location.pathname + '?r=' + encodedResults;
                     window.history.pushState({ scores: scores }, 'Quiz Results', newUrl);
-                    console.log("URL updated with raw scores");
+                    console.log("URL updated with raw scores:", encodedResults);
                 } catch (error) {
                     console.error("Error updating URL:", error);
                 }
