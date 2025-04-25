@@ -605,8 +605,11 @@
         </div>
 
         <div id="results">
-            <h2>Your Political Tendency Profile</h2>
-            <canvas id="radarChart"></canvas>
+            <div id="results-content">
+                <h2>Your Political Tendency Profile</h2>
+                <canvas id="radarChart"></canvas>
+                <div id="similarFigures" class="similar-figures"></div>
+            </div>
             <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
             
             <div class="share-buttons">
@@ -1028,142 +1031,233 @@
         {
             name: "Mao Zedong",
             country: "China",
-            traits: [0.3, 0.4, 0.7, 0.1, 0.2, 0.1, 1.0, 0.8, 0.0, 1.0, 0.6, 0.1],
-            description: "Led Communist China, emphasizing collectivization and state authority."
+            traits: {
+                'Authority': 1.0,
+                'Collectivism': 1.0,
+                'Globalism': 0.2,
+                'Progressivism': 0.2,
+                'Nationalism': 0.2,
+                'Individualism': 0.2,
+                'Meritocracy': 0.3,
+                'Traditionalism': 0.2,
+                'Security': 0.3,
+                'Liberty': 0.1,
+                'Equality': 0.1,
+                'Openness': 0.2
+            },
+            description: "Led Communist China with strong state control and collectivist policy."
         },
         {
             name: "Margaret Thatcher",
             country: "U.K.",
-            traits: [0.5, 0.2, 0.6, 0.9, 0.8, 0.7, 0.6, 0.6, 0.7, 0.1, 0.3, 0.4],
-            description: "Conservative British PM known for free-market policies and individualism."
+            traits: {
+                'Individualism': 1.0,
+                'Meritocracy': 1.0,
+                'Globalism': 0.2,
+                'Progressivism': 0.1,
+                'Nationalism': 0.3,
+                'Traditionalism': 0.4,
+                'Authority': 0.2,
+                'Security': 0.3,
+                'Liberty': 0.2,
+                'Collectivism': 0.1,
+                'Equality': 0.1,
+                'Openness': 0.1
+            },
+            description: "Free-market champion who believed in personal responsibility and merit."
         },
         {
             name: "Nelson Mandela",
             country: "S. Africa",
-            traits: [0.6, 0.9, 0.4, 0.5, 0.5, 0.2, 0.4, 0.4, 0.9, 0.4, 1.0, 0.8],
-            description: "Anti-apartheid revolutionary who championed equality and reconciliation."
+            traits: {
+                'Progressivism': 1.0,
+                'Equality': 1.0,
+                'Globalism': 0.3,
+                'Nationalism': 0.2,
+                'Individualism': 0.3,
+                'Meritocracy': 0.2,
+                'Traditionalism': 0.1,
+                'Authority': 0.2,
+                'Security': 0.2,
+                'Liberty': 0.2,
+                'Collectivism': 0.2,
+                'Openness': 0.1
+            },
+            description: "Progressive leader who dismantled apartheid and promoted equality."
         },
         {
             name: "Mahatma Gandhi",
             country: "India",
-            traits: [0.5, 0.7, 0.8, 0.6, 0.4, 0.6, 0.3, 0.3, 0.9, 0.3, 0.8, 0.7],
-            description: "Led India to independence through non-violent civil disobedience."
+            traits: {
+                'Liberty': 1.0,
+                'Traditionalism': 1.0,
+                'Globalism': 0.2,
+                'Progressivism': 0.3,
+                'Individualism': 0.3,
+                'Meritocracy': 0.1,
+                'Nationalism': 0.3,
+                'Authority': 0.1,
+                'Security': 0.2,
+                'Collectivism': 0.2,
+                'Equality': 0.1,
+                'Openness': 0.2
+            },
+            description: "Non-violent nationalist who led India to freedom with civil disobedience."
         },
         {
             name: "Mustafa Kemal Atatürk",
             country: "Turkey",
-            traits: [0.5, 0.9, 1.0, 0.5, 0.6, 0.2, 0.8, 0.7, 0.5, 0.3, 0.6, 0.6],
-            description: "Founder of modern Turkey, combined nationalism with westernization."
+            traits: {
+                'Nationalism': 1.0,
+                'Progressivism': 1.0,
+                'Globalism': 0.3,
+                'Individualism': 0.3,
+                'Meritocracy': 0.2,
+                'Traditionalism': 0.2,
+                'Authority': 0.3,
+                'Security': 0.2,
+                'Liberty': 0.2,
+                'Collectivism': 0.1,
+                'Equality': 0.1,
+                'Openness': 0.1
+            },
+            description: "Modernizer who combined secular reforms with Turkish nationalism."
         },
         {
             name: "Che Guevara",
             country: "Argentina/Cuba",
-            traits: [0.9, 0.8, 0.4, 0.2, 0.3, 0.1, 0.8, 0.7, 0.2, 1.0, 0.7, 0.5],
-            description: "Revolutionary who advocated for global socialism and collective values."
+            traits: {
+                'Globalism': 1.0,
+                'Collectivism': 1.0,
+                'Progressivism': 0.3,
+                'Nationalism': 0.2,
+                'Individualism': 0.1,
+                'Meritocracy': 0.2,
+                'Traditionalism': 0.2,
+                'Authority': 0.3,
+                'Security': 0.3,
+                'Liberty': 0.1,
+                'Equality': 0.1,
+                'Openness': 0.2
+            },
+            description: "Revolutionary figure who symbolized global socialism and collective struggle."
         },
         {
             name: "Ayn Rand",
             country: "USA",
-            traits: [0.3, 0.2, 0.2, 1.0, 1.0, 0.2, 0.1, 0.3, 1.0, 0.0, 0.2, 0.6],
-            description: "Philosopher who developed Objectivism, emphasizing individualism and free markets."
-        },
-        {
-            name: "Jacinda Ardern",
-            country: "N. Zealand",
-            traits: [0.8, 1.0, 0.3, 0.4, 0.5, 0.2, 0.4, 0.6, 0.7, 0.4, 0.9, 0.9],
-            description: "Progressive PM known for inclusive policies and compassionate leadership."
+            traits: {
+                'Individualism': 1.0,
+                'Openness': 1.0,
+                'Globalism': 0.1,
+                'Progressivism': 0.2,
+                'Nationalism': 0.2,
+                'Meritocracy': 0.4,
+                'Traditionalism': 0.2,
+                'Authority': 0.2,
+                'Security': 0.1,
+                'Collectivism': 0.0,
+                'Equality': 0.1,
+                'Liberty': 0.5
+            },
+            description: "Objectivist thinker who emphasized liberty and radical individualism."
         },
         {
             name: "Ruhollah Khomeini",
             country: "Iran",
-            traits: [0.2, 0.1, 0.6, 0.1, 0.3, 1.0, 1.0, 0.9, 0.0, 0.6, 0.3, 0.1],
-            description: "Islamic revolutionary who established Iran's theocratic system."
-        },
-        {
-            name: "Angela Merkel",
-            country: "Germany",
-            traits: [0.9, 0.6, 0.4, 0.4, 0.7, 0.4, 0.5, 0.6, 0.7, 0.2, 0.6, 0.9],
-            description: "Long-serving German Chancellor known for promoting European unity and evidence-based pragmatic leadership."
-        },
-        {
-            name: "Lee Kuan Yew",
-            country: "Singapore",
-            traits: [0.8, 0.5, 0.7, 0.3, 1.0, 0.5, 0.9, 0.9, 0.3, 0.4, 0.4, 0.4],
-            description: "Singapore's founding father who created a meritocratic society with strong governance."
+            traits: {
+                'Traditionalism': 1.0,
+                'Authority': 1.0,
+                'Globalism': 0.3,
+                'Progressivism': 0.2,
+                'Nationalism': 0.2,
+                'Individualism': 0.1,
+                'Meritocracy': 0.2,
+                'Security': 0.2,
+                'Liberty': 0.1,
+                'Collectivism': 0.2,
+                'Equality': 0.1,
+                'Openness': 0.3
+            },
+            description: "Islamic revolutionary who established a theocratic regime rooted in tradition."
         },
         {
             name: "Martin Luther King Jr.",
             country: "USA",
-            traits: [0.5, 0.9, 0.2, 0.6, 0.4, 0.3, 0.3, 0.2, 0.9, 0.5, 1.0, 0.9],
-            description: "Civil rights leader who advocated for racial equality through non-violent resistance."
-        },
-        {
-            name: "Joseph Stalin",
-            country: "USSR",
-            traits: [0.4, 0.3, 0.7, 0.0, 0.2, 0.2, 1.0, 1.0, 0.0, 1.0, 0.4, 0.0],
-            description: "Soviet leader who enforced collectivization and maintained power through repression, purges, and a vast security apparatus."
-        },
-        {
-            name: "Vladimir Putin",
-            country: "Russia",
-            traits: [0.3, 0.2, 0.9, 0.3, 0.4, 0.8, 1.0, 0.9, 0.2, 0.3, 0.3, 0.2],
-            description: "Long-time Russian president blending strong-man authority with assertive nationalism and tight control of media and dissent."
-        },
-        {
-            name: "Donald Trump",
-            country: "USA",
-            traits: [0.1, 0.2, 0.9, 0.8, 0.6, 0.7, 0.7, 0.8, 0.5, 0.1, 0.3, 0.3],
-            description: "Controversial U.S. president whose 'America First' stance and populist rhetoric polarized domestic and global audiences."
-        },
-        {
-            name: "Greta Thunberg",
-            country: "Sweden",
-            traits: [0.9, 1.0, 0.1, 0.5, 0.3, 0.1, 0.2, 0.6, 0.8, 0.6, 0.8, 0.9],
-            description: "Youth climate activist whose blunt, moral appeals for urgent action made her a lightning-rod in the global climate debate."
-        },
-        {
-            name: "Malala Yousafzai",
-            country: "Pakistan",
-            traits: [0.8, 0.9, 0.2, 0.6, 0.5, 0.2, 0.2, 0.4, 0.9, 0.5, 1.0, 0.9],
-            description: "Education activist who survived a Taliban attack and became a Nobel laureate championing girls' rights worldwide."
-        },
-        {
-            name: "Pope Francis",
-            country: "Vatican/Argentina",
-            traits: [0.9, 0.6, 0.1, 0.3, 0.3, 0.8, 0.8, 0.5, 0.4, 0.6, 0.8, 0.7],
-            description: "Catholic pontiff mixing doctrinal tradition with outspoken advocacy for migrants, the poor, and interfaith dialogue."
-        },
-        {
-            name: "Xi Jinping",
-            country: "China",
-            traits: [0.7, 0.3, 0.9, 0.1, 0.5, 0.6, 1.0, 1.0, 0.0, 1.0, 0.4, 0.2],
-            description: "China's paramount leader who tightens Communist Party control, champions state-led development, and prioritizes national security."
-        },
-        {
-            name: "Elon Musk",
-            country: "USA/S. Africa",
-            traits: [0.8, 0.6, 0.2, 1.0, 0.9, 0.1, 0.6, 0.4, 0.8, 0.1, 0.3, 0.6],
-            description: "Polarizing tech magnate celebrated for radical innovation and a libertarian streak that challenges regulation and convention."
+            traits: {
+                'Liberty': 1.0,
+                'Equality': 1.0,
+                'Globalism': 0.2,
+                'Progressivism': 0.3,
+                'Nationalism': 0.1,
+                'Individualism': 0.3,
+                'Meritocracy': 0.3,
+                'Traditionalism': 0.1,
+                'Authority': 0.1,
+                'Security': 0.2,
+                'Collectivism': 0.2,
+                'Openness': 0.2
+            },
+            description: "Civil rights leader who championed liberty and racial justice."
         },
         {
             name: "Winston Churchill",
             country: "U.K.",
-            traits: [0.6, 0.2, 0.8, 0.5, 0.5, 0.8, 0.8, 0.9, 0.7, 0.2, 0.3, 0.4],
-            description: "British statesman who led the UK to victory during WWII, championing democracy and freedom against totalitarianism."
+            traits: {
+                'Security': 1.0,
+                'Nationalism': 1.0,
+                'Globalism': 0.3,
+                'Progressivism': 0.2,
+                'Individualism': 0.2,
+                'Meritocracy': 0.2,
+                'Traditionalism': 0.3,
+                'Authority': 0.3,
+                'Liberty': 0.2,
+                'Collectivism': 0.1,
+                'Equality': 0.1,
+                'Openness': 0.1
+            },
+            description: "Resolute wartime leader who embodied British authority and national pride."
         },
         {
             name: "Eleanor Roosevelt",
             country: "USA",
-            traits: [0.9, 0.9, 0.2, 0.6, 0.5, 0.3, 0.3, 0.5, 0.8, 0.4, 1.0, 0.9],
-            description: "Transformative First Lady who championed human rights globally, civil rights domestically, and reshaped the role of women in politics."
+            traits: {
+                'Globalism': 1.0,
+                'Openness': 1.0,
+                'Progressivism': 0.3,
+                'Nationalism': 0.1,
+                'Individualism': 0.3,
+                'Meritocracy': 0.2,
+                'Traditionalism': 0.1,
+                'Authority': 0.2,
+                'Security': 0.2,
+                'Liberty': 0.3,
+                'Collectivism': 0.1,
+                'Equality': 0.1
+            },
+            description: "Visionary global advocate for human rights and inclusion."
         },
         {
             name: "Simón Bolívar",
             country: "South America",
-            traits: [0.5, 0.6, 1.0, 0.6, 0.4, 0.3, 0.8, 0.7, 0.8, 0.3, 0.5, 0.5],
-            description: "\"The Liberator\" who led independence movements against Spanish rule across South America, creating multiple new nations."
+            traits: {
+                'Security': 1.0,
+                'Meritocracy': 1.0,
+                'Globalism': 0.2,
+                'Progressivism': 0.3,
+                'Nationalism': 0.3,
+                'Individualism': 0.2,
+                'Traditionalism': 0.2,
+                'Authority': 0.2,
+                'Liberty': 0.2,
+                'Collectivism': 0.1,
+                'Equality': 0.1,
+                'Openness': 0.1
+            },
+            description: "Liberator of Latin America who valued merit and state resilience."
         }
-        ];
+    ];
+    
 
         // Separate image URL map
         const figureImageUrls = {
@@ -1220,17 +1314,24 @@
         };
 
         // Calculate cosine similarity between two vectors
-        function calculateCosineSimilarity(vectorA, vectorB) {
-            if (vectorA.length !== vectorB.length) {
-                throw new Error('Vectors must have the same length');
-            }
+        function calculateCosineSimilarity(vectorA, userScores, figureTraits) {
+            // All traits to check
+            const allTraits = [
+                'Authority', 'Liberty',
+                'Security', 'Openness',
+                'Traditionalism', 'Progressivism',
+                'Nationalism', 'Globalism',
+                'Collectivism', 'Individualism',
+                'Equality', 'Meritocracy'
+            ];
             
-            // Convert figure's 0-1 scale to user's 0-100 scale for consistent comparison
-            const scaledVectorB = vectorB.map(value => value * 100);
+            // Create vectors from trait objects
+            const userVector = allTraits.map(trait => userScores[trait] || 50);
+            const figureVector = allTraits.map(trait => (figureTraits[trait] || 0) * 100); // Scale 0-1 to 0-100
             
             // Calculate magnitudes
-            const magnitudeA = Math.sqrt(vectorA.reduce((sum, val) => sum + val * val, 0));
-            const magnitudeB = Math.sqrt(scaledVectorB.reduce((sum, val) => sum + val * val, 0));
+            const magnitudeA = Math.sqrt(userVector.reduce((sum, val) => sum + val * val, 0));
+            const magnitudeB = Math.sqrt(figureVector.reduce((sum, val) => sum + val * val, 0));
             
             // Handle zero vectors to avoid division by zero
             if (magnitudeA === 0 || magnitudeB === 0) {
@@ -1238,8 +1339,8 @@
             }
             
             // Normalize vectors to unit vectors
-            const normalizedA = vectorA.map(val => val / magnitudeA);
-            const normalizedB = scaledVectorB.map(val => val / magnitudeB);
+            const normalizedA = userVector.map(val => val / magnitudeA);
+            const normalizedB = figureVector.map(val => val / magnitudeB);
             
             // Calculate dot product of normalized vectors
             let dotProduct = 0;
@@ -1253,23 +1354,10 @@
 
         // Find similar public figures based on user's scores
         function findSimilarFigures(normalizedScores) {
-            // All possible traits (dimensions)
-            const allTraits = [
-                'Globalism', 'Progressivism', 'Nationalism', 'Individualism',
-                'Meritocracy', 'Traditionalism', 'Authority', 'Security',
-                'Liberty', 'Collectivism', 'Equality', 'Openness'
-            ];
-            
-            const userVector = allTraits.map(trait => normalizedScores[trait] || 50); // Default to 50 if missing
-            
             // Calculate similarity scores for each figure using cosine similarity
             const similarities = publicFigures.map(figure => {
-                // Create figure vector from figure's traits array which now contains numeric values
-                // Each figure.traits is an array of 12 numeric values corresponding to the traits in allTraits
-                const figureVector = figure.traits;
-                
                 // Calculate cosine similarity with normalized vectors
-                const cosineSimilarity = calculateCosineSimilarity(userVector, figureVector);
+                const cosineSimilarity = calculateCosineSimilarity([], normalizedScores, figure.traits);
                 
                 return {
                     figure: figure,
@@ -1469,16 +1557,9 @@
 
         // Function to get top traits for a figure
         function getTopTraits(figure) {
-            // All traits in order matching the numeric indices in figure.traits array
-            const allTraits = [
-                'Globalism', 'Progressivism', 'Nationalism', 'Individualism',
-                'Meritocracy', 'Traditionalism', 'Authority', 'Security',
-                'Liberty', 'Collectivism', 'Equality', 'Openness'
-            ];
-            
-            // Create array of trait names and their scores
-            const traitScores = figure.traits.map((score, index) => ({
-                trait: allTraits[index],
+            // Convert object to array of {trait, score} objects
+            const traitScores = Object.entries(figure.traits).map(([trait, score]) => ({
+                trait: trait,
                 score: score
             }));
             
@@ -1531,23 +1612,67 @@
             document.getElementById('mainContainer').classList.add('visible');
         }
 
-        function generateResultImage() {
-            return new Promise((resolve) => {
-                const chartCanvas = document.getElementById('radarChart');
-                const chartImage = chartCanvas.toDataURL('image/png');
+        async function downloadResults() {
+            // Add html2canvas script if it's not already in the page
+            if (!window.html2canvas) {
+                return new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+                    script.onload = () => {
+                        downloadResultsContent().then(resolve);
+                    };
+                    document.head.appendChild(script);
+                });
+            } else {
+                return downloadResultsContent();
+            }
+        }
+
+        async function downloadResultsContent() {
+            const resultsContent = document.getElementById('results-content');
+            
+            try {
+                const canvas = await html2canvas(resultsContent, {
+                    backgroundColor: 'white',
+                    scale: 2, // Higher quality
+                    useCORS: true, // To handle external images
+                    logging: false
+                });
                 
-                // Create a temporary canvas
-                const tempCanvas = document.createElement('canvas');
-                const ctx = tempCanvas.getContext('2d');
-                tempCanvas.width = chartCanvas.width;
-                tempCanvas.height = chartCanvas.height + 60;
-                
-                // Fill background
-                ctx.fillStyle = 'white';
-                ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-                
-                // Add the chart
-                const chartImg = new Image();
+                const link = document.createElement('a');
+                link.download = 'political-tendency-profile.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (error) {
+                console.error('Error generating image:', error);
+                // Fallback to just the chart if html2canvas fails
+                const imageData = await generateResultImage();
+                const link = document.createElement('a');
+                link.download = 'political-tendency-profile.png';
+                link.href = imageData;
+                link.click();
+            }
+        }
+
+        async function generateResultImage() {
+            const chartCanvas = document.getElementById('radarChart');
+            const chartImage = chartCanvas.toDataURL('image/png');
+            
+            // Create a temporary canvas
+            const tempCanvas = document.createElement('canvas');
+            const ctx = tempCanvas.getContext('2d');
+            tempCanvas.width = chartCanvas.width;
+            tempCanvas.height = chartCanvas.height + 60;
+            
+            // Fill background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Add the chart
+            const chartImg = new Image();
+            chartImg.src = chartImage;
+            
+            return new Promise(resolve => {
                 chartImg.onload = function() {
                     ctx.drawImage(chartImg, 0, 0);
                     
@@ -1559,16 +1684,7 @@
                     
                     resolve(tempCanvas.toDataURL('image/png'));
                 };
-                chartImg.src = chartImage;
             });
-        }
-
-        async function downloadResults() {
-            const imageData = await generateResultImage();
-            const link = document.createElement('a');
-            link.download = 'political-tendency-profile.png';
-            link.href = imageData;
-            link.click();
         }
 
         async function shareResults(platform) {
